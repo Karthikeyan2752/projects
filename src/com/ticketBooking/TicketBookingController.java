@@ -31,6 +31,11 @@ public class TicketBookingController implements TicketBookingControllerCallBack,
 	}
 
 	@Override
+	public boolean payment(int amount, Flight flight) {
+		return ticketBookingModel.payment(amount, flight);
+	}
+
+	@Override
 	public void loginFailiure(String string) {
 		// TODO Auto-generated method stub
 

@@ -10,4 +10,6 @@ public interface TicketBookingControllerCallBack {
 	Ticket addPassenger(String name, String mobileNumber, String address, String aadhaar, String origin,
 			String destination, Flight flight);
 
+	boolean payment(int amount, Flight flight);
+
 }

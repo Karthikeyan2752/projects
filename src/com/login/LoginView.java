@@ -16,23 +16,31 @@ public class LoginView implements LoginViewCallBack {
 	
 	static public void main(String[] args) {
 		LoginView loginView = new LoginView();
+		System.out.println(">>>> WELCOME TO BERMUDA AIRWAYS >>>>");
 		System.out.println("press 1 for admin controls");
 		System.out.println("press 2 for ticket booking");
 		int choice = scanner.nextInt();
 		if (choice == 1) {
-			loginView.create();
+			loginView.checkForLogin();
 		} else if (choice == 2) {
 			TicketBookingView ticketBookingView = new TicketBookingView();
 			ticketBookingView.getUserDetails();
+			System.out.println("Enter 1 for admin controls");
+			System.out.println("Enter 2 for ticket booking");
+			System.out.println("Enter 0 exit");
+			int choice2 = scanner.nextInt();
+			if (choice2 == 1) {
+				loginView.checkForLogin();
+			} else if (choice == 2) {
+				ticketBookingView.getUserDetails();
+			} else {
+				return;
+			}
 		}
 	}
 	
-	public void create() {
-		checkForLogin();
-	}
 
 	private void checkForLogin() {
-		System.out.println("Welcome to Flight Reservation System\n ---------------------------------");
 		System.out.println("Enter User Name");
 		String userName = scanner.next();
 		System.out.println("Enter password");
@@ -46,7 +54,7 @@ public class LoginView implements LoginViewCallBack {
 		adminControls();
 	}
 
-	private void adminControls() {
+	private void printChoices() {
 
 		System.out.println("Please Enter 1 to see the available flights");
 		System.out.println("Please Enter 2 to see the available airports");
@@ -54,23 +62,32 @@ public class LoginView implements LoginViewCallBack {
 		System.out.println("Please Enter 4 to available flights in airport");
 		System.out.println("Please Enter 5 to see the passenger details");
 		System.out.println("Please Enter 0 to exit");
+	}
 
+	private void adminControls() {
+		printChoices();
 		int choice = scanner.nextInt();
 		switch (choice) {
 		case 1:
 			loginController.displayFlights();
+			adminControls();
 			break;
 		case 2:
 			loginController.displayAirports();
+			adminControls();
 			break;
 		case 3:
 			loginController.displayTicketsCount();
+			adminControls();
 			break;
 		case 4:
 			loginController.displayFlightsInAirport();
+			adminControls();
 			break;
 		case 5:
 			loginController.displayPassengerDetails();
+			adminControls();
+			break;
 		default:
 			System.out.println("Exitting.... Thank You!");
 			break;

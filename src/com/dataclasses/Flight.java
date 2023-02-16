@@ -1,18 +1,43 @@
 package com.dataclasses;
 
+import java.util.Date;
+
 public class Flight {
 
 	private Airport from;
 	private Airport to;
 	private String model;
-	// private List<Airport> stops;
 	private int capacity = 20;
+	private int tatkalCapacity = 10;
 	private String flightName;
+	private int ticketPrice = 3000;
+	private Date onBoardingDate;
+
+	public int getTatkalCapacity() {
+		return tatkalCapacity;
+	}
+
+	public void setTatkalCapacity(int tatkalCapacity) {
+		this.tatkalCapacity = tatkalCapacity;
+	}
+
+	public Date getOnBoardingDate() {
+		return onBoardingDate;
+	}
+
+	@SuppressWarnings("deprecation")
+	public void setOnBoardingDate(String date) {
+		this.onBoardingDate = new Date(date);
+	}
 
 	public Airport getFrom() {
 		return from;
 	}
 
+
+	public int getTicketPrice() {
+		return ticketPrice;
+	}
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
@@ -47,5 +72,6 @@ public class Flight {
 	private void setToLocation(Airport to) {
 		this.to = to;
 	}
+
 
 }

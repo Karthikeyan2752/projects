@@ -7,6 +7,15 @@ public class Passenger {
 	private String address;
 	private String aadhaar;
 	private Ticket ticket;
+	private int amountPaid;
+
+	public int getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(int amountPaid) {
+		this.amountPaid = amountPaid;
+	}
 
 	public Passenger(String name, String mobileNumber, String address, String aadhaar, Ticket ticket) {
 		this.name = name;
@@ -20,5 +29,6 @@ public class Passenger {
 	public String toString() {
 		return name + "\t" + mobileNumber + "\t" + address + "\t" + aadhaar;
 	}
+
 
 }

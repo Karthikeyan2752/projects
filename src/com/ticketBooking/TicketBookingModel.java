@@ -25,10 +25,16 @@ public class TicketBookingModel implements TicketBookingModelCallBack {
 	@Override
 	public Ticket addPassenger(String name, String mobileNumber, String address, String aadhaar, String origin,
 			String destination, Flight flight) {
-		Ticket ticket = new Ticket(ticketNumber++, new Airport(origin), new Airport(destination), name);
+		Ticket ticket = new Ticket(ticketNumber++, new Airport(origin), new Airport(destination), name,
+				flight.getOnBoardingDate());
 		Passenger passenger = new Passenger(name, mobileNumber, address, aadhaar, ticket);
 		DBRepository.getInstance().addPassenger(passenger, flight, ticket);
 		return ticket;
+	}
+
+	@Override
+	public boolean payment(int amount, Flight flight) {
+		return DBRepository.getInstance().makePayment(amount, flight);
 	}
 
 	@Override

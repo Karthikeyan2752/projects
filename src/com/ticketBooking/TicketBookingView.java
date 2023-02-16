@@ -1,5 +1,6 @@
 package com.ticketBooking;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import com.dataclasses.Flight;
@@ -20,11 +21,14 @@ public class TicketBookingView implements TicketBookingViewCallBack {
 		int choice = scanner.nextInt();
 		if (choice == 1) {
 			getUserDetails();
+		} else if (choice == 0) {
+			System.exit(0);
 		} else {
 			return;
 		}
 	}
 	public void getUserDetails() {
+
 		System.out.println("Please Enter your name: ");
 		String name = scanner.next();
 		System.out.println("Please Enter your 10 digit mobile number: ");
@@ -42,13 +46,48 @@ public class TicketBookingView implements TicketBookingViewCallBack {
 			flightNotFound();
 			return;
 		} else {
-			Ticket ticket = ticketBookingController.addPassenger(name, mobileNumber, address, aadhaar, origin,
-					destination, flight);
-			System.out.println("Have a good journey!");
-			System.out.println("Your ticket:\n" + ticket.toString());
+			if (!passengerConsent(flight)) {
+				return;
+			}
+			int amount = payment(flight);
+			boolean paid = ticketBookingController.payment(amount, flight);
+			if (paid) {
+				Ticket ticket = ticketBookingController.addPassenger(name, mobileNumber, address, aadhaar, origin,
+						destination, flight);
+				System.out.println("Have a good journey!");
+				System.out.println("Your ticket:\n" + ticket.toString());
+			} else {
+				System.out.println("Payment failed!, Try again");
+				ticketBookingController.payment(amount, flight);
+			}
 			return;
 		}
 
+	}
+
+	public boolean passengerConsent(Flight flight) {
+		Date onBoardingDate = flight.getOnBoardingDate();
+		System.out.println("ON BOARDING DATE: " + onBoardingDate);
+		System.out.println("Are you Okay with the ON BOARDING DATE");
+		System.out.println("Enter 1 to continue");
+		System.out.println("Enter 2 to booking page");
+		System.out.println("Enter 0 to exit");
+		int choice = scanner.nextInt();
+		if (choice == 1) {
+			return true;
+		} else if (choice == 2) {
+			getUserDetails();
+		} else if (choice == 0) {
+			System.exit(0);
+		}
+		return false;
+	}
+
+	public int payment(Flight flight) {
+		System.out.println("Total amount to be paid: " + flight.getTicketPrice());
+		System.out.println("Enter the amount mentioned above to make payment");
+		int amount = scanner.nextInt();
+		return amount;
 	}
 
 

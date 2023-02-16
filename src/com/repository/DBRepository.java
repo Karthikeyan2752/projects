@@ -17,7 +17,7 @@ import com.dataclasses.Ticket;
 public class DBRepository {
 	private static DBRepository flightDBInstance;
 	private static int totalTickets = 0;
-
+	private static int totalAmount = 0;
 	private static List<Credentials> adminCredentials = new ArrayList<>();
 	private static List<Passenger> passengers = new ArrayList<>();
 	private static Set<Flight> flights = new HashSet<>();
@@ -33,7 +33,6 @@ public class DBRepository {
 			flightDBInstance = new DBRepository();
 			flightDBInstance.initialSetup();
 		}
-		// flightDBInstance.initialSetup();
 		return flightDBInstance;
 	}
 
@@ -43,7 +42,9 @@ public class DBRepository {
 		Airport mumbai = new Airport("Mumbai");
 		Airport delhi = new Airport("Delhi");
 		Flight flight1 = new Flight("eagle1", chennai, mumbai);
+		flight1.setOnBoardingDate("03/01/2023");
 		Flight flight2 = new Flight("eagle2", chennai, delhi);
+		flight2.setOnBoardingDate("03/01/2023");
 
 		flights.add(flight2);
 		flights.add(flight1);
@@ -95,6 +96,10 @@ public class DBRepository {
 		return passengers;
 	}
 
+	public int totalRevenue() {
+		return totalAmount;
+	}
+
 	public Set<Airport> getAirports() {
 
 		return allFlights.keySet();
@@ -107,6 +112,14 @@ public class DBRepository {
 
 	public Map<Airport, List<Flight>> getEntry() {
 		return allFlights;
+	}
+
+	public boolean makePayment(int amount, Flight flight) {
+		if (flight.getTicketPrice() == amount) {
+			totalAmount += amount;
+			return true;
+		}
+		return false;
 	}
 
 }

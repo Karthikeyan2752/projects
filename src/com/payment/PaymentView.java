@@ -1,5 +1,12 @@
 package com.payment;
 
-public class PaymentView {
+import java.util.Scanner;
 
+public class PaymentView {
+	private PaymentControllerCallBack paymentControllerCallBack;
+	Scanner sc = new Scanner(System.in);
+
+	public PaymentView() {
+		PaymentController paymentController;
+	}
 }
