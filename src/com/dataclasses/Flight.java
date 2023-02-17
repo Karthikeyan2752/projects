@@ -72,6 +72,4 @@ public class Flight {
 	private void setToLocation(Airport to) {
 		this.to = to;
 	}
-
-
 }

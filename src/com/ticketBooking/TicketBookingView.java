@@ -27,6 +27,19 @@ public class TicketBookingView implements TicketBookingViewCallBack {
 			return;
 		}
 	}
+
+	public void cancelTicket() {
+		System.out.println("Enter your ticket ID");
+		int ticketId = scanner.nextInt();
+		boolean isCanceled = ticketBookingController.cancelTicket(ticketId);
+		if (isCanceled) {
+			System.out.println("Ticket canceled");
+
+		} else {
+			System.out.println("Ticket ID not found!");
+		}
+	}
+
 	public void getUserDetails() {
 
 		System.out.println("Please Enter your name: ");

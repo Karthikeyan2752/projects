@@ -12,4 +12,6 @@ public interface TicketBookingModelCallBack {
 
 	public boolean payment(int amount, Flight flight);
 
+	public boolean cancelTicket(int ticketId);
+
 }

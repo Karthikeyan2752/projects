@@ -9,19 +9,31 @@ public class Ticket {
 	private Airport to;
 	private String passsengerName;
 	private Date onBoardingDate;
+	private Flight flight;
 
-	public Ticket(int ticketNumber, Airport from, Airport to, String passsengerName, Date onBoardingDate) {
+	public Ticket(int ticketNumber, Airport from, Airport to, String passsengerName, Date onBoardingDate,
+			Flight flight) {
 		this.ticketNumber = ticketNumber;
 		this.from = from;
 		this.to = to;
+		this.flight = flight;
 		this.onBoardingDate = onBoardingDate;
 		this.passsengerName = passsengerName;
 	}
 	
+	public Flight getFlight() {
+		return flight;
+	}
 	@Override
 	public String toString() {		
-		return "Ticket Number" + ticketNumber + "passenger name : " + passsengerName + "\nfrom : " + from.getLocation()
-				+ "\nto : " + to.getLocation() + "\nOn Boarding Date: " + onBoardingDate.toString();
+		return "Ticket Number : " + ticketNumber + "\npassenger name : " + passsengerName + "\nfrom : "
+				+ from.getLocation()
+				+ "\nto : " + to.getLocation() + "\nOn Boarding Date: " + onBoardingDate + "\nFlight name : "
+				+ flight.getFlightName();
+	}
+
+	public int getId() {
+		return ticketNumber;
 	}
 
 }

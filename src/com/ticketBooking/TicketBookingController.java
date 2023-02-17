@@ -26,7 +26,7 @@ public class TicketBookingController implements TicketBookingControllerCallBack,
 	}
 	@Override
 	public void loginSuccess(Admin adminUser) {
-		// TODO Auto-generated method stub
+
 
 	}
 
@@ -37,7 +37,12 @@ public class TicketBookingController implements TicketBookingControllerCallBack,
 
 	@Override
 	public void loginFailiure(String string) {
-		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean cancelTicket(int ticketId) {
+		return ticketBookingModel.cancelTicket(ticketId);
 
 	}
 

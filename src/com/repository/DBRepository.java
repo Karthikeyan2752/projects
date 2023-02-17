@@ -40,14 +40,21 @@ public class DBRepository {
 		adminCredentials.add(new Credentials("1", "admin", "123"));
 		Airport chennai = new Airport("Chennai");
 		Airport mumbai = new Airport("Mumbai");
+		Airport malaysiya = new Airport("Malaysiya");
+		Airport beijing = new Airport("Beijing");
 		Airport delhi = new Airport("Delhi");
 		Flight flight1 = new Flight("eagle1", chennai, mumbai);
-		flight1.setOnBoardingDate("03/01/2023");
+		Flight flight3 = new Flight("MH370", malaysiya, beijing);
 		Flight flight2 = new Flight("eagle2", chennai, delhi);
+		flight1.setOnBoardingDate("03/01/2023");
+		flight3.setOnBoardingDate("03/08/2023");
 		flight2.setOnBoardingDate("03/01/2023");
+
 
 		flights.add(flight2);
 		flights.add(flight1);
+		flights.add(flight3);
+		allFlights.put(malaysiya, List.of(flight3));
 		allFlights.put(chennai, List.of(flight1, flight2));
 
 	}
@@ -67,6 +74,10 @@ public class DBRepository {
 					&& flight.getCapacity() > 0) {
 				flight.setCapacity(flight.getCapacity() - 1);
 				return flight;
+			} else if (flight.getFrom().getLocation().equals(origin) && flight.getTo().getLocation().equals(destination)
+					&& flight.getTatkalCapacity() > 0) {
+				flight.setTatkalCapacity(flight.getTatkalCapacity() - 1);
+				return flight;
 			}
 		}
 		return null;
@@ -74,7 +85,7 @@ public class DBRepository {
 
 	public void addPassenger(Passenger passenger, Flight flight, Ticket ticket) {
 		passengers.add(passenger);
-		flights.add(flight);
+		// flights.add(flight);
 		tickets.add(ticket);
 		totalTickets++;
 	}
@@ -118,6 +129,17 @@ public class DBRepository {
 		if (flight.getTicketPrice() == amount) {
 			totalAmount += amount;
 			return true;
+		}
+		return false;
+	}
+
+	public boolean cancelTicket(int ticketId) {
+		for (Ticket ticket : tickets) {
+			if (ticket.getId() == ticketId) {
+				tickets.remove(ticket);
+				// totalAmount-=ticket.;
+				return true;
+			}
 		}
 		return false;
 	}

@@ -16,9 +16,14 @@ public class LoginView implements LoginViewCallBack {
 	
 	static public void main(String[] args) {
 		LoginView loginView = new LoginView();
-		System.out.println(">>>> WELCOME TO BERMUDA AIRWAYS >>>>");
+		loginView.start(loginView);
+	}
+
+	public void start(LoginView loginView) {
+		System.out.println("\t>>>> WELCOME TO BERMUDA AIRWAYS >>>>");
 		System.out.println("press 1 for admin controls");
 		System.out.println("press 2 for ticket booking");
+		System.out.println("press 0 to exit");
 		int choice = scanner.nextInt();
 		if (choice == 1) {
 			loginView.checkForLogin();
@@ -27,12 +32,16 @@ public class LoginView implements LoginViewCallBack {
 			ticketBookingView.getUserDetails();
 			System.out.println("Enter 1 for admin controls");
 			System.out.println("Enter 2 for ticket booking");
+			System.out.println("Enter 3 for cancel ticket");
 			System.out.println("Enter 0 exit");
 			int choice2 = scanner.nextInt();
 			if (choice2 == 1) {
 				loginView.checkForLogin();
-			} else if (choice == 2) {
+			} else if (choice2 == 2) {
 				ticketBookingView.getUserDetails();
+			} else if (choice2 == 3) {
+				ticketBookingView.cancelTicket();
+				loginView.start(loginView);
 			} else {
 				return;
 			}
