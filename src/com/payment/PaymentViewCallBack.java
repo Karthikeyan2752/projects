@@ -1,5 +1,7 @@
 package com.payment;
 
-public interface PaymentViewCallBack {
+import com.dataclasses.Flight;
 
+public interface PaymentViewCallBack {
+	boolean payment(Flight flight, int count);
 }

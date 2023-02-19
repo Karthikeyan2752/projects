@@ -30,5 +30,8 @@ public class Passenger {
 		return name + "\t" + mobileNumber + "\t" + address + "\t" + aadhaar;
 	}
 
+	public Ticket getTicket() {
+		return ticket;
+	}
 
 }

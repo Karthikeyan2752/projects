@@ -26,9 +26,10 @@ public class Ticket {
 	}
 	@Override
 	public String toString() {		
-		return "Ticket Number : " + ticketNumber + "\npassenger name : " + passsengerName + "\nfrom : "
+		return "Ticket Number :\t" + ticketNumber + "\nSeat Number :\t" + flight.getFlightName() + " " + ticketNumber
+				+ "\npassenger name :\t" + passsengerName + "\nfrom :\t"
 				+ from.getLocation()
-				+ "\nto : " + to.getLocation() + "\nOn Boarding Date: " + onBoardingDate + "\nFlight name : "
+				+ "\nto :\t" + to.getLocation() + "\nOn Boarding Date :\t" + onBoardingDate + "\nFlight name :\t"
 				+ flight.getFlightName();
 	}
 

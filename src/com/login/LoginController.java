@@ -28,33 +28,4 @@ public class LoginController implements LoginControllerCallBack, LoginModelContr
 		loginView.loginFailed(errorMessage);	
 	}
 
-	@Override
-	public void displayFlights() {
-		loginModel.displayFlights();
-
 	}
-
-	@Override
-	public void displayAirports() {
-		loginModel.displayAirports();
-
-	}
-
-	@Override
-	public void displayPassengerDetails() {
-		loginModel.displayPassengerDetails();
-
-	}
-
-	@Override
-	public void displayTicketsCount() {
-		loginModel.displayTicketCount();
-
-	}
-
-	@Override
-	public void displayFlightsInAirport() {
-		loginModel.displayFlightsInAirports();
-
-	}
-}

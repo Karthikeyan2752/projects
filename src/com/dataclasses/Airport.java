@@ -6,11 +6,16 @@ public class Airport {
 
 	public Airport(String location) {
 		this.location = location;
-		this.name = location + "Airport";
+		this.name = location + " Airport";
 	}
 
 	public String getLocation() {
 		return location;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }

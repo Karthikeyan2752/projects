@@ -2,8 +2,10 @@ package com.login;
 
 import java.util.Scanner;
 
+import com.admin.controls.AdminControlView;
 import com.dataclasses.Admin;
-import com.ticketBooking.TicketBookingView;
+import com.ticket.booking.TicketBookingView;
+import com.ticket.cancelling.TicketCancellingView;
 
 public class LoginView implements LoginViewCallBack {
 
@@ -14,9 +16,10 @@ public class LoginView implements LoginViewCallBack {
 		loginController = new LoginController(this);
 	}
 	
-	static public void main(String[] args) {
+	public static void main(String[] args) {
 		LoginView loginView = new LoginView();
 		loginView.start(loginView);
+
 	}
 
 	public void start(LoginView loginView) {
@@ -29,7 +32,7 @@ public class LoginView implements LoginViewCallBack {
 			loginView.checkForLogin();
 		} else if (choice == 2) {
 			TicketBookingView ticketBookingView = new TicketBookingView();
-			ticketBookingView.getUserDetails();
+			ticketBookingView.getNumberOfTickets();
 			System.out.println("Enter 1 for admin controls");
 			System.out.println("Enter 2 for ticket booking");
 			System.out.println("Enter 3 for cancel ticket");
@@ -38,9 +41,10 @@ public class LoginView implements LoginViewCallBack {
 			if (choice2 == 1) {
 				loginView.checkForLogin();
 			} else if (choice2 == 2) {
-				ticketBookingView.getUserDetails();
+				ticketBookingView.getNumberOfTickets();
 			} else if (choice2 == 3) {
-				ticketBookingView.cancelTicket();
+				TicketCancellingView ticketCancellingView = new TicketCancellingView();
+				ticketCancellingView.getTicketId();
 				loginView.start(loginView);
 			} else {
 				return;
@@ -60,49 +64,11 @@ public class LoginView implements LoginViewCallBack {
 	@Override
 	public void loginSuccess(Admin admin) {
 		System.out.println(">--  Welcome " + admin.getUserName() + "  --<");
-		adminControls();
+		AdminControlView adminControlView = new AdminControlView();
+		adminControlView.adminControls(this);
 	}
 
-	private void printChoices() {
 
-		System.out.println("Please Enter 1 to see the available flights");
-		System.out.println("Please Enter 2 to see the available airports");
-		System.out.println("Please Enter 3 to see the number of tickets booked");
-		System.out.println("Please Enter 4 to available flights in airport");
-		System.out.println("Please Enter 5 to see the passenger details");
-		System.out.println("Please Enter 0 to exit");
-	}
-
-	private void adminControls() {
-		printChoices();
-		int choice = scanner.nextInt();
-		switch (choice) {
-		case 1:
-			loginController.displayFlights();
-			adminControls();
-			break;
-		case 2:
-			loginController.displayAirports();
-			adminControls();
-			break;
-		case 3:
-			loginController.displayTicketsCount();
-			adminControls();
-			break;
-		case 4:
-			loginController.displayFlightsInAirport();
-			adminControls();
-			break;
-		case 5:
-			loginController.displayPassengerDetails();
-			adminControls();
-			break;
-		default:
-			System.out.println("Exitting.... Thank You!");
-			break;
-		}
-
-	}
 
 	@Override
 	public void loginFailed(String errorMessage) {

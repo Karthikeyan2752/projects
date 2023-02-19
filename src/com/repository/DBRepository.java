@@ -1,6 +1,7 @@
 package com.repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -46,10 +47,9 @@ public class DBRepository {
 		Flight flight1 = new Flight("eagle1", chennai, mumbai);
 		Flight flight3 = new Flight("MH370", malaysiya, beijing);
 		Flight flight2 = new Flight("eagle2", chennai, delhi);
-		flight1.setOnBoardingDate("03/01/2023");
+		flight1.setOnBoardingDate("02/20/2023");
 		flight3.setOnBoardingDate("03/08/2023");
 		flight2.setOnBoardingDate("03/01/2023");
-
 
 		flights.add(flight2);
 		flights.add(flight1);
@@ -68,14 +68,14 @@ public class DBRepository {
 		return null;
 	}
 
-	public Flight searchFlight(String origin, String destination) {
+	public Flight searchFlight(String origin, String destination, Date date) {
 		for (Flight flight : flights) {
 			if (flight.getFrom().getLocation().equals(origin) && flight.getTo().getLocation().equals(destination)
-					&& flight.getCapacity() > 0) {
+					&& flight.getCapacity() > 0 && checkDate(flight, date)) {
 				flight.setCapacity(flight.getCapacity() - 1);
 				return flight;
 			} else if (flight.getFrom().getLocation().equals(origin) && flight.getTo().getLocation().equals(destination)
-					&& flight.getTatkalCapacity() > 0) {
+					&& flight.getTatkalCapacity() > 0 && checkDate(flight, date)) {
 				flight.setTatkalCapacity(flight.getTatkalCapacity() - 1);
 				return flight;
 			}
@@ -83,9 +83,20 @@ public class DBRepository {
 		return null;
 	}
 
+	private boolean checkDate(Flight flight, Date date) {
+		try {
+			if (flight.getOnBoardingDate().compareTo(date) == 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("Invalid Date!");
+			return false;
+		}
+		return false;
+	}
+
 	public void addPassenger(Passenger passenger, Flight flight, Ticket ticket) {
 		passengers.add(passenger);
-		// flights.add(flight);
 		tickets.add(ticket);
 		totalTickets++;
 	}
@@ -125,8 +136,8 @@ public class DBRepository {
 		return allFlights;
 	}
 
-	public boolean makePayment(int amount, Flight flight) {
-		if (flight.getTicketPrice() == amount) {
+	public boolean makePayment(int amount, Flight flight, int count) {
+		if (flight.getTicketPrice() * count == amount) {
 			totalAmount += amount;
 			return true;
 		}
@@ -136,12 +147,32 @@ public class DBRepository {
 	public boolean cancelTicket(int ticketId) {
 		for (Ticket ticket : tickets) {
 			if (ticket.getId() == ticketId) {
+				removePassengerFromDB(ticketId);
+				Flight flight = ticket.getFlight();
 				tickets.remove(ticket);
-				// totalAmount-=ticket.;
+				int cancellationCharge = flight.getTicketPrice() / 2;
+				totalAmount -= cancellationCharge;
+				totalTickets--;
+
+				if (ticketId <= 20) {
+					flight.setCapacity(flight.getCapacity() + 1);
+				}
+
 				return true;
 			}
 		}
 		return false;
 	}
+
+	private void removePassengerFromDB(int ticketId) {
+		for (Passenger p : passengers) {
+			if (p.getTicket().getId() == ticketId) {
+				passengers.remove(p);
+				return;
+			}
+		}
+
+	}
+
 
 }
