@@ -8,9 +8,15 @@ public class TicketCancellingController
 	private TicketCancellingViewCallBack ticketCancellingView;
 	private TicketCancellingModelCallBack ticketCancellingModel;
 
-	public TicketCancellingController(TicketCancellingView ticketCancellingView) {
+	public TicketCancellingController(TicketCancellingViewCallBack ticketCancellingView) {
 		this.ticketCancellingView = ticketCancellingView;
-		this.ticketCancellingModel = new TicketCancellingModel(this);
+		ticketCancellingModel = new TicketCancellingModel(this);
+	}
+
+	@Override
+	public String cancelTicket(int ticketID) {
+		return ticketCancellingModel.cancelTicket(ticketID);
+
 	}
 
 }

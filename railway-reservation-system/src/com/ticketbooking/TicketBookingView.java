@@ -62,7 +62,7 @@ public class TicketBookingView implements TicketBookingViewCallBack {
 		Date date = getDateFromUser();
 		System.out.println("Please enter the number of tickets : ");
 		int numberOfTickets = scanner.nextInt();
-		for (int i = 0; i < numberOfTickets; i++) {
+		for (int i = numberOfTickets; i > 0; i--) {
 			getDetails(date, depature, arrival);
 		}
 	}

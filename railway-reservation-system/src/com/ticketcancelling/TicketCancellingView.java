@@ -10,4 +10,10 @@ public class TicketCancellingView implements TicketCancellingViewCallBack{
 	public TicketCancellingView() {
 		this.ticketCancellingController = new TicketCancellingController(this);
 	}
+
+	public void cancelTicket() {
+		System.out.println("Enter your ticket ID : ");
+		int ticketID = scanner.nextInt();
+		String result = ticketCancellingController.cancelTicket(ticketID);
+	}
 }

@@ -5,7 +5,6 @@ public class Passenger {
 	private int passengerID;
 	private String name;
 	private byte age;
-	private String prefferedBerth;
 	private String alottedBerth;
 
 	public String getAlottedBerth() {
@@ -19,12 +18,24 @@ public class Passenger {
 	public Passenger(int passengerID, String name, byte age, String prefferedBerth) {
 		this.name = name;
 		this.age = age;
-		this.prefferedBerth = prefferedBerth;
+		this.alottedBerth = prefferedBerth;
+	}
+
+	public int getPassengerID() {
+		return passengerID;
 	}
 
 	@Override
 	public String toString() {
-		return passengerID + "\t" + name + "\t" + prefferedBerth;
+		return passengerID + "\t" + name + "\t" + alottedBerth;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public byte getAge() {
+		return age;
 	}
 
 }

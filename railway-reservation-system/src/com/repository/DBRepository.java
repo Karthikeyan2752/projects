@@ -133,10 +133,52 @@ public class DBRepository {
 
 		Passenger passenger = new Passenger(passengerID++, name, age, prefferedBerth);
 		passengers.add(passenger);
-		Ticket ticket = new Ticket(passenger, train.getFrom(), train.getTo());
+		Ticket ticket = new Ticket(train, passenger, train.getFrom(), train.getTo());
 		tickets.add(ticket);
 
 		return ticket;
+	}
+
+	private void incrementBerthCount(Train train, String berth) {
+		if (berth == "L") {
+			train.setAvailableLowerBerth(train.getAvailableLowerBerth() + 1);
+		} else if (berth == "M") {
+			train.setAvailableMiddleBerth(train.getAvailableMiddleBerth() + 1);
+		} else if (berth == "U") {
+			train.setAvailableUpperBerth(train.getAvailableUpperBerth() + 1);
+		} else if (berth == "RAC") {
+			train.setAvailableRAC(train.getAvailableRAC() + 1);
+		} else if (berth == "Waiting List") {
+			train.setWaitingList(train.getWaitingList() + 1);
+		}
+
+	}
+	public String cancelTicket(int ticketID) {
+		String result = "Ticket ID not found ! ";
+		for (Ticket ticket : tickets) {
+			Passenger passenger = ticket.getPassenger();
+			if (passenger.getPassengerID() == ticketID) {
+				Train train = ticket.getTrain();
+				String berth = passenger.getAlottedBerth();
+				incrementBerthCount(train, berth);
+				passengers.remove(passenger);
+				tickets.remove(ticket);
+				bookTicketForRACAndWaitingList(train, passenger, berth);
+			}
+		}
+
+		return result;
+	}
+
+	private void bookTicketForRACAndWaitingList(Train train, Passenger passenger, String berth) {
+		if (!train.getRACListQueue().isEmpty()) {
+			bookTicket(passenger.getName(), passenger.getAge(), "L", train.getOnBoardingDate(),
+					train.getFrom().getLocation(), train.getTo().getLocation());
+		} else if (!train.getWaitingListQueue().isEmpty()) {
+			bookTicket(passenger.getName(), passenger.getAge(), "L", train.getOnBoardingDate(),
+					train.getFrom().getLocation(), train.getTo().getLocation());
+		}
+
 	}
 }
 

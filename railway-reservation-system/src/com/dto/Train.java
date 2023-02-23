@@ -7,6 +7,7 @@ import java.util.Queue;
 public class Train {
 
 	private String name;
+	private int ticketPrice;
 	private Queue<Ticket> waitingList = new LinkedList<>();
 	private Queue<Ticket> rACList = new LinkedList<>();
 	private Date onBoardingDate;
