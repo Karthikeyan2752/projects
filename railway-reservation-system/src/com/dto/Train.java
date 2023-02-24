@@ -7,6 +7,7 @@ import java.util.Queue;
 public class Train {
 
 	private String name;
+	private int numberOfPassengers;
 	private int ticketPrice;
 	private Queue<Ticket> rACList = new LinkedList<>();
 	private Queue<Ticket> waitingList = new LinkedList<>();
@@ -18,6 +19,21 @@ public class Train {
 	private int availableWaitingList = 1;
 	private RailwayStation from;
 	private RailwayStation to;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getNumberOfPassengers() {
+		return numberOfPassengers;
+	}
+
+	public void setNumberOfPassengers(int numberOfPassengers) {
+		this.numberOfPassengers = numberOfPassengers;
+	}
 
 	public Queue<Ticket> getWaitingListQueue() {
 		return waitingList;
@@ -98,6 +114,13 @@ public class Train {
 		this.to = to;
 	}
 
+	public int getTicketPrice() {
+		return ticketPrice;
+	}
+
+	public void setTicketPrice(int price) {
+		ticketPrice = price;
+	}
 
 
 }

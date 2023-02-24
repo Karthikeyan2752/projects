@@ -16,4 +16,8 @@ public interface AdminControlControllerCallBack {
 
 	void addTrains(String name, int seats, String depature, String arrival, Date date);
 
+	String deleteTrains(String name);
+
+	List<Train> viewAvailableTrains();
+
 }

@@ -34,13 +34,13 @@ public class AdminControlView implements AdminControlViewCallBack {
 			addTrains();
 			break;
 		case 2:
-			addTrains();
+			deleteTrains();
 			break;
 		case 3:
 			setupRailwayStation();
 			break;
 		case 4:
-			addTrains();
+			viewAvailableTrains();
 			break;
 		case 5:
 			viewAvailableSeats();
@@ -56,12 +56,21 @@ public class AdminControlView implements AdminControlViewCallBack {
 		}
 	}
 
+	private void viewAvailableTrains() {
+		List<Train> trains = adminControlController.viewAvailableTrains();
+		for (Train train : trains) {
+			System.out.println(train.toString());
+		}
+		displayControls();
+
+	}
+
 	private void viewPassengerDetails() {
 		List<Passenger> passengers = adminControlController.viewPassengerDetails();
 		for (Passenger passenger : passengers) {
 			System.out.println(passenger.toString());
 		}
-
+		displayControls();
 	}
 
 	private void viewAvailableSeats() {
@@ -73,6 +82,7 @@ public class AdminControlView implements AdminControlViewCallBack {
 		System.out.println("Available upper berths        : " + train.getAvailableUpperBerth());
 		System.out.println("Available RAC berths          : " + train.getAvailableRAC());
 		System.out.println("Available Waiting list slots  : " + train.getWaitingList());
+		displayControls();
 
 	}
 
@@ -80,6 +90,7 @@ public class AdminControlView implements AdminControlViewCallBack {
 		System.out.println("Please enter the location of railway station : ");
 		String location = scanner.next();
 		adminControlController.setupRailwayStation(location);
+		displayControls();
 
 	}
 
@@ -92,13 +103,19 @@ public class AdminControlView implements AdminControlViewCallBack {
 		String depature = scanner.next();
 		System.out.println("Please enter the arrival railwaySation : ");
 		String arrival = scanner.next();
-		System.out.println("Please enter the depature date : ");
-		String dateString = scanner.next();
 		Date date = getDateFromUser();
 		adminControlController.addTrains(name, seats, depature, arrival, date);
+		displayControls();
 
 	}
 
+	private void deleteTrains() {
+		System.out.println("Please Enter the name of the train : ");
+		String name = scanner.next();
+		String result = adminControlController.deleteTrains(name);
+		System.out.println(result);
+		displayControls();
+	}
 	private Date getDateFromUser() {
 		System.out.println("Please enter your depature date : (mm/dd/yyy)");
 		String dateString = scanner.next();

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.dto.Ticket;
 import com.dto.User;
+import com.payment.PaymentView;
 import com.userlogin.UserLoginView;
 
 public class TicketBookingView implements TicketBookingViewCallBack {
@@ -55,7 +56,11 @@ public class TicketBookingView implements TicketBookingViewCallBack {
 		System.out.println("Enter your preffered berth : (L/M/U)\n");
 		String prefferedBerth = scanner.next();
 		Ticket ticket = ticketBookingController.bookTicket(name, age, prefferedBerth, date, depature, arrival);
-		System.out.println(ticket.toString());
+		if (ticket != null) {
+			System.out.println(ticket.toString());
+		} else {
+			System.out.println("Sorry ticket not available");
+		}
 	}
 
 	private void book(User user) {
@@ -69,8 +74,14 @@ public class TicketBookingView implements TicketBookingViewCallBack {
 		if (tatkal) {
 			System.out.println("Tatkal tickets only available !\n");
 		}
-		System.out.println("Please enter the number of tickets : ");
+		System.out.println("Please enter the number of tickets : \n");
 		int numberOfTickets = scanner.nextInt();
+		PaymentView paymentView = new PaymentView();
+		int amount = paymentView.payment(depature, arrival, date, numberOfTickets, tatkal);
+		if (amount == -1) {
+			System.out.println("Tickets not available");
+			return;
+		}
 		for (int i = numberOfTickets; i > 0; i--) {
 			getDetails(date, depature, arrival);
 		}

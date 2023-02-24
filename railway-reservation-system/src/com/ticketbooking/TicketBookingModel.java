@@ -23,6 +23,7 @@ public class TicketBookingModel implements TicketBookingModelCallBack {
 
 	}
 
+
 	@Override
 	public boolean isTatkal(Date date) {
 		Date currentDate = new Date();

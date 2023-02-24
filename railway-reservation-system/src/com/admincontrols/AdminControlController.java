@@ -24,19 +24,29 @@ public class AdminControlController implements AdminControlControllerCallBack, A
 
 	@Override
 	public Train viewAvailableSeats(String name) {
-		return viewAvailableSeats(name);
+		return adminControlModel.viewAvailableSeats(name);
 	}
 
 	@Override
 	public void setupRailwayStation(String location) {
-		// TODO Auto-generated method stub
+		adminControlModel.setupRailwayStation(location);
 
 	}
 
 	@Override
 	public void addTrains(String name, int seats, String depature, String arrival, Date date) {
-		// TODO Auto-generated method stub
+		adminControlModel.addTrains(name, seats, depature, arrival, date);
 
+	}
+
+	@Override
+	public String deleteTrains(String name) {
+		return adminControlModel.deleteTrains(name);
+	}
+
+	@Override
+	public List<Train> viewAvailableTrains() {
+		return adminControlModel.viewAvailableTrains();
 	}
 
 }

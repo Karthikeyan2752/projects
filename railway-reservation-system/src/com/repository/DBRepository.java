@@ -19,14 +19,14 @@ import com.dto.User;
 public class DBRepository {
 
 	private static DBRepository dBRInstance;
-
+	private static int earnings = 0;
 	private static int passengerID = 100;
 	private List<Credentials> adminCredentials = new ArrayList<Credentials>();
-	private List<Passenger> passengers = new ArrayList<>();
-	private List<Ticket> tickets = new ArrayList<>();
-	private List<Train> trains = new ArrayList<>();
+	private static List<Passenger> passengers = new ArrayList<>();
+	private static List<Ticket> tickets = new ArrayList<>();
+	private static List<Train> trains = new ArrayList<>();
 	private Set<User> users = new HashSet<>();
-	private Map<RailwayStation, List<Train>> trainMap = new HashMap<>();
+	private static Map<RailwayStation, List<Train>> trainMap = new HashMap<>();
 	private Admin admin = null;
 
 	private DBRepository() {
@@ -55,8 +55,10 @@ public class DBRepository {
 		users.add(new User(1, "karthi", "123", 78713938));
 		RailwayStation chennai = new RailwayStation("chennai");
 		RailwayStation tanjore = new RailwayStation("tanjore");
-		Train chennaiExpress = new Train("", chennai, tanjore, new Date("02/24/2023"));
+		Train chennaiExpress = new Train("chennaiExpress", chennai, tanjore, new Date("02/25/2023"));
+		chennaiExpress.setTicketPrice(100);
 		trains.add(chennaiExpress);
+		trainMap.put(chennai, trains);
 	}
 
 	public User createAndGetUser(int userID, String name, String password, long mobileNumber) {
@@ -135,6 +137,7 @@ public class DBRepository {
 
 		Passenger passenger = new Passenger(passengerID, name, age, prefferedBerth);
 		passengers.add(passenger);
+		train.setNumberOfPassengers(train.getNumberOfPassengers() + 1);
 		Ticket ticket = new Ticket(train, passenger, train.getFrom(), train.getTo());
 		tickets.add(ticket);
 
@@ -191,6 +194,98 @@ public class DBRepository {
 		for (Ticket ticket : tickets) {
 			if (ticket.getPassenger().getPassengerID() == passengerID) {
 				return ticket;
+			}
+		}
+		return null;
+	}
+
+	public List<Passenger> viewPassengerDetails() {
+		return passengers;
+	}
+
+	public void setupRailwayStation(String location) {
+		trainMap.put(new RailwayStation(location), new ArrayList<>());
+	}
+
+	public void addTrains(String name, int seats, String depature, String arrival, Date date) {
+		RailwayStation from = null;
+		RailwayStation to = null;
+		for (RailwayStation station : trainMap.keySet()) {
+			if (station.getLocation() == depature) {
+				from = station;
+			} else {
+				if (station.getLocation() == arrival) {
+					to = station;
+				}
+			}
+		}
+
+		Train train = null;
+		if (from != null && to != null) {
+			train = new Train(name, from, to, date);
+			train.setAvailableLowerBerth(seats);
+			train.setAvailableMiddleBerth(seats);
+			train.setAvailableRAC(seats);
+			train.setWaitingList(seats);
+			trainMap.get(from).add(train);
+			trains.add(train);
+		}
+
+
+	}
+
+	public String deleteTrains(String name) {
+		String result = "Train not found";
+		for (List<Train> t : trainMap.values()) {
+			for (Train train : t) {
+				if (train.getName().equals(name)) {
+				if (train.getNumberOfPassengers() == 0) {
+					trains.remove(train);
+					return result = "Train Removed successfully!";
+				}
+				result = "Can't remove because there are " + train.getNumberOfPassengers() + " in train";
+			}
+		}
+	}
+		return result;
+	}
+
+	public List<Train> viewAvailableTrains() {
+		return trains;
+	}
+
+	public int payment(String depature, String arrival, Date date, int numberOfTickets, boolean tatkal) {
+		for (Train train : trains) {
+			if (arrival.equals(train.getTo().getLocation()) && depature.equals(train.getFrom().getLocation())
+					&& train.getOnBoardingDate().compareTo(date) == 0) {
+				boolean available = isAvailable(train, numberOfTickets);
+				if (available && tatkal) {
+					earnings = earnings + (train.getTicketPrice() + (train.getTicketPrice() / 2)) * numberOfTickets;
+					return (train.getTicketPrice() + (train.getTicketPrice() / 2)) * numberOfTickets;
+				} else if (available) {
+					earnings = earnings + train.getTicketPrice() * numberOfTickets;
+					return train.getTicketPrice() * numberOfTickets;
+				}
+			}
+		}
+		return -1;
+	}
+
+	private boolean isAvailable(Train train, int numberOfTickets) {
+		int totalTickets = 0;
+		totalTickets += train.getAvailableLowerBerth();
+		totalTickets += train.getAvailableMiddleBerth();
+		totalTickets += train.getAvailableUpperBerth();
+		totalTickets += train.getAvailableRAC();
+		totalTickets += train.getWaitingList();
+
+		return numberOfTickets <= totalTickets;
+	}
+
+	public Train viewAvailableSeats(String name) {
+		for (Train train : trains) {
+			if (train.getName().equals(name)) {
+				return train;
 			}
 		}
 		return null;
