@@ -12,11 +12,11 @@ public class Train {
 	private Queue<Ticket> rACList = new LinkedList<>();
 	private Queue<Ticket> waitingList = new LinkedList<>();
 	private Date onBoardingDate;
-	private int availableRAC = 1;
-	private int availableLowerBerth = 1;
-	private int availableUpperBerth = 0;
-	private int availableMiddleBerth = 0;
-	private int availableWaitingList = 1;
+	private int availableRAC;
+	private int availableLowerBerth;
+	private int availableUpperBerth;
+	private int availableMiddleBerth;
+	private int availableWaitingList;
 	private RailwayStation from;
 	private RailwayStation to;
 
@@ -122,5 +122,9 @@ public class Train {
 		ticketPrice = price;
 	}
 
+	@Override
+	public String toString() {
+		return name + " --> From : " + from.getLocation() + "\tTo : " + to.getLocation();
+	}
 
 }
