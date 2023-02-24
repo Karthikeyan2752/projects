@@ -9,6 +9,7 @@ public class User {
 	private String name;
 	private String password;
 	private long mobileNumber;
+	private List<CallLetter> callLetters = new ArrayList<>();
 	private List<String> skills = new ArrayList<>();
 
 	public User(int userID, String name, String password, long mobileNumber, List<String> skills) {
@@ -31,9 +32,17 @@ public class User {
 		return password;
 	}
 
+	public void addCallLetter(CallLetter callLetter) {
+		callLetters.add(callLetter);
+	}
+
 	@Override
 	public String toString() {
 		return "user id : " + userID + "\nname : " + name + "\nmobile : " + mobileNumber + "\n";
+	}
+
+	public List<String> getSkills() {
+		return skills;
 	}
 
 }

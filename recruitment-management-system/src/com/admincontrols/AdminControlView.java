@@ -15,4 +15,5 @@ public class AdminControlView implements AdminControlViewCallBack {
 
 	}
 
+
 }
