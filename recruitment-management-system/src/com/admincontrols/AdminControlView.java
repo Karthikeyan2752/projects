@@ -11,4 +11,8 @@ public class AdminControlView implements AdminControlViewCallBack {
 		this.adminControlController = new AdminControlController(this);
 	}
 
+	public void displayControls() {
+
+	}
+
 }

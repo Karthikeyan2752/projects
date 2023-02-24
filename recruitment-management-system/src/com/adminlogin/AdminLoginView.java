@@ -2,6 +2,7 @@ package com.adminlogin;
 
 import java.util.Scanner;
 
+import com.admincontrols.AdminControlView;
 import com.dto.Admin;
 
 public class AdminLoginView implements AdminLoginViewCallBack {
@@ -23,7 +24,7 @@ public class AdminLoginView implements AdminLoginViewCallBack {
 	}
 
 	private void checkForLogin() {
-		System.out.println("\tIRCTC WELCOMES YOU\n ---------------------------------");
+		System.out.println("\t WELCOME ADMIN\n ---------------------------------");
 		System.out.println("Enter User Name");
 		String userName = scanner.next();
 		System.out.println("Enter password");
@@ -34,6 +35,8 @@ public class AdminLoginView implements AdminLoginViewCallBack {
 	@Override
 	public void loginSuccess(Admin admin) {
 		System.out.println("\n-->Welcome " + admin.getUserName() + "<--\n");
+		AdminControlView adminControlView = new AdminControlView();
+		adminControlView.displayControls();
 	}
 
 	@Override

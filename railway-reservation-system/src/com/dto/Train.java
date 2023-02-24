@@ -14,6 +14,7 @@ public class Train {
 	private Date onBoardingDate;
 	private int availableRAC;
 	private int availableLowerBerth;
+
 	private int availableUpperBerth;
 	private int availableMiddleBerth;
 	private int availableWaitingList;

@@ -51,6 +51,7 @@ public class DBRepository {
 	}
 
 	private void initialSetup() {
+
 		adminCredentials.add(new Credentials("1", "admin", "123"));
 		users.add(new User(1, "karthi", "123", 78713938));
 		RailwayStation chennai = new RailwayStation("chennai");
@@ -58,6 +59,11 @@ public class DBRepository {
 		Train chennaiExpress = new Train("chennaiExpress", chennai, tanjore, new Date("02/25/2023"));
 		chennaiExpress.setTicketPrice(100);
 		trains.add(chennaiExpress);
+		chennaiExpress.setAvailableLowerBerth(1);
+		chennaiExpress.setAvailableMiddleBerth(1);
+		chennaiExpress.setAvailableRAC(1);
+		chennaiExpress.setAvailableUpperBerth(1);
+		chennaiExpress.setWaitingList(1);
 		trainMap.put(chennai, trains);
 	}
 
