@@ -19,7 +19,7 @@ public class UserLoginView implements UserLoginViewCallBack {
 
 	public void userLogin() {
 		System.out.println("Enter your user ID : ");
-		int userID = scanner.nextInt();
+		int userID = UIValidator.getIntChoice();
 		System.out.println("Enter your password : ");
 		String password = scanner.next();
 

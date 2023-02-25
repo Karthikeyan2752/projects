@@ -85,6 +85,7 @@ public class ApplyView implements ApplyViewCallBack {
 		System.out.println("Enter the respective job ID to apply : ");
 		int jobID = UIValidator.getIntChoice();
 		applyController.apply(user, jobID);
+		System.out.println("Applied successfully, waiting for HR response\n");
 		displayControls(user);
 	}
 
