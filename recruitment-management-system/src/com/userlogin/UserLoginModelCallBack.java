@@ -8,6 +8,6 @@ public interface UserLoginModelCallBack {
 
 	User userLogin(int userID, String password);
 
-	User userSignin(String name, String password, long mobileNumber, List<String> skills);
+	User userSignin(String name, String password, String mobileNumber, List<String> skills);
 
 }

@@ -61,10 +61,6 @@ public class UIValidator {
 		return input;
 	}
 
-	public static void main(String[] args) {
-		getChoice();
-	}
-
 	public static int getIntChoice() {
 		int input;
 		do {
@@ -105,6 +101,19 @@ public class UIValidator {
 			}
 			input = scanner.nextInt();
 		} while (input < -1 || input > Integer.MAX_VALUE);
+		scanner.nextLine();
+		return input;
+	}
+
+	public static int getIntChoiceForSkill() {
+		int input;
+		do {
+			while (!scanner.hasNextInt()) {
+				System.out.println("Invalid input. Please enter a valid input : ");
+				scanner.next();
+			}
+			input = scanner.nextInt();
+		} while (input < 0 || input > 15);
 		scanner.nextLine();
 		return input;
 	}

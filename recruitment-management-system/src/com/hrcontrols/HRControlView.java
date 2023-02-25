@@ -19,12 +19,8 @@ public class HRControlView implements HRControlViewCallBack {
 		this.hRControlController = new HRControlController(this);
 	}
 
-	public static void main(String[] args) {
-		HRControlView h = new HRControlView();
-		h.displayControls(new HR(1, "hr", "zoho", 993737873));
-	}
-
 	public void displayControls(HR hr) {
+		System.out.println("\tWelcome! start recruiting for " + hr.getCompanyName() + "\n");
 		System.out.println("Please enter 1 to post job notification ");
 		System.out.println("Please enter 2 to see applied candidates ");
 		System.out.println("Please enter 3 to schedule interview ");
@@ -55,8 +51,7 @@ public class HRControlView implements HRControlViewCallBack {
 			generateReport(hr);
 			break;
 		case 0:
-			System.exit(0);
-			break;
+			return;
 		default:
 			displayControls(hr);
 		}
@@ -87,7 +82,7 @@ public class HRControlView implements HRControlViewCallBack {
 			System.out.println("Job not found! Try again");
 			scheduleInterview(hr);
 		}
-		List<User> appliedCandidates = getAppliedCandidates();
+		List<User> appliedCandidates = job.getAppliedCandidates();
 		for (User appliedCandidate : appliedCandidates) {
 			System.out.println(appliedCandidate.toString());
 		}
@@ -97,13 +92,14 @@ public class HRControlView implements HRControlViewCallBack {
 		while (stop != -1) {
 			System.out.println("Enter 0 to send call letter for all candidates : ");
 			System.out.println("Enter respective candidate id to send call letter : ");
-			System.out.println("Enter -1 to stop selecting and send call letter : ");
+			System.out.println("Enter -1 to stop selecting and send call letter : \n");
 			int choice = UIValidator.getIntChoiceForSelecting();
 			for (User candidate : appliedCandidates) {
 				if (choice == -1) {
-					break;
+					stop = -1;
 				} else if (choice == 0) {
 					selectedCandidates = appliedCandidates;
+					stop = -1;
 				} else {
 					int id = candidate.getUserID();
 					if (choice == id) {
@@ -120,6 +116,7 @@ public class HRControlView implements HRControlViewCallBack {
 	}
 
 	private JobNotification getJob(HR hr) {
+		System.out.println("Enter job ID : ");
 		int jobID = UIValidator.getIntChoice();
 		return hRControlController.getJob(hr, jobID);
 	}
@@ -128,8 +125,10 @@ public class HRControlView implements HRControlViewCallBack {
 		System.out.println("Enter job id : ");
 		int jobID = UIValidator.getIntChoice();
 		List<User> users = hRControlController.getAppliedCandidates(jobID);
-		for (User user : users) {
-			System.out.println(user.toString());
+		if (users != null) {
+			for (User user : users) {
+				System.out.println(user.toString());
+			}
 		}
 		return users;
 

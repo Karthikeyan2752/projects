@@ -12,7 +12,7 @@ public class HRLoginModel implements HRLoginModelCallBack {
 	}
 
 	@Override
-	public HR sigin(String name, String companyName, String password, long mobileNumber) {
+	public HR sigin(String name, String companyName, String password, String mobileNumber) {
 		return DBRepository.getInstance().hRSignin(name, companyName, password, mobileNumber);
 	}
 

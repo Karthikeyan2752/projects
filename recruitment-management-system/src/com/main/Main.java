@@ -28,30 +28,27 @@ public class Main {
 		switch (choice) {
 		case 1:
 			adminLoginView.start();
-			start();
 			break;
 		case 2:
 			hrLoginView.hRLogin();
-			start();
 			break;
 		case 3:
 			userLoginView.userLogin();
-			start();
 			break;
 		case 4:
 			hrLoginView.signUp();
-			start();
 			break;
 		case 5:
 			userLoginView.signUp();
-			start();
 			break;
 		case 0:
 			System.exit(0);
 			break;
 		default:
 			start();
+
 		}
+		start();
 	}
 
 }

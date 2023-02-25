@@ -7,7 +7,7 @@ public class HR {
 	private int id;
 	private String companyName;
 	private String name;
-	private long mobileNumber;
+	private String mobileNumber;
 	private String password;
 	private List<JobNotification> jobs = new ArrayList<>();
 
@@ -27,8 +27,9 @@ public class HR {
 		this.password = password;
 	}
 
-	public HR(int id, String name, String companyName, long mobileNumber) {
+	public HR(int id, String name, String companyName, String mobileNumber) {
 		this.companyName = companyName;
+		this.id = id;
 		this.name = name;
 		this.mobileNumber = mobileNumber;
 	}
@@ -46,7 +47,7 @@ public class HR {
 	}
 	@Override
 	public String toString() {
-		return id + "\t" + name + "\t" + companyName;
+		return "id\tname\tcompanyName" + id + "\t" + name + "\t" + companyName;
 	}
 
 }

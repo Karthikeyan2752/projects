@@ -19,10 +19,10 @@ public class DBRepository {
 	private static int jobID = 1;
 	private static int hRUserID = 1;
 	private static DBRepository dBRInstance;
-	private Set<User> users = new HashSet<>();
-	private Set<HR> hRs = new HashSet<>();
-	private List<JobNotification> jobs = new ArrayList<>();
-	private List<Credentials> adminCredentials = new ArrayList<Credentials>();
+	private static Set<User> users = new HashSet<>();
+	private static Set<HR> hRs = new HashSet<>();
+	private static List<JobNotification> jobs = new ArrayList<>();
+	private static List<Credentials> adminCredentials = new ArrayList<Credentials>();
 	private Admin admin = null;
 
 	private DBRepository() {
@@ -38,7 +38,7 @@ public class DBRepository {
 		return null;
 	}
 
-	public User createAndGetUser(String name, String password, long mobileNumber, List<String> skills) {
+	public User createAndGetUser(String name, String password, String mobileNumber, List<String> skills) {
 		User user = new User(userID++, name, password, mobileNumber, skills);
 		users.add(user);
 		return user;
@@ -63,9 +63,19 @@ public class DBRepository {
 
 	private void initialSetup() {
 		adminCredentials.add(new Credentials("1", "admin", "123"));
+		HR hr = new HR(hRUserID++, "charles", "zoho", "");
+		hr.setPassword("123");
+		hRs.add(hr);
+		HR hr1 = new HR(hRUserID++, "karthi", "reslilient", "");
+		hr1.setPassword("111");
+		hRs.add(hr1);
+		users.add(new User(userID++, "karthi", "123", "9893878738", List.of("sql", "java")));
+		JobNotification job = new JobNotification(jobID++, "sde", new Date("02/27/2023"), List.of("sql", "java"), hr,
+				2);
+		jobs.add(job);
 	}
 
-	public HR hRSignin(String name, String companyName, String password, long mobileNumber) {
+	public HR hRSignin(String name, String companyName, String password, String mobileNumber) {
 		HR hr = new HR(hRUserID++, name, companyName, mobileNumber);
 		hr.setPassword(password);
 		hRs.add(hr);
@@ -74,7 +84,7 @@ public class DBRepository {
 
 	public HR hRLogin(int userID, String password) {
 		for (HR hr : hRs) {
-			if (hr.getId() == userID) {
+			if (hr.getId() == userID && hr.getPassword().equals(password)) {
 				return hr;
 			}
 		}
@@ -117,6 +127,28 @@ public class DBRepository {
 
 	public List<JobNotification> generateReport(HR hr) {
 		return hr.getJobs();
+	}
+
+	public List<JobNotification> getJobs() {
+		return jobs;
+	}
+
+	public String apply(User user, int jobID) {
+		String result = "Some thing went wrong!";
+		for (JobNotification job : jobs) {
+			if (job.getID() == jobID) {
+				if (!job.getAppliedCandidates().contains(user)) {
+					job.addCandiates(user);
+					user.addJobs(job);
+					return result = "job with ID : " + jobID + "applied successfully,\nwaiting for HR approval";
+				}
+			}
+		}
+		return result;
+	}
+
+	public List<JobNotification> getAppliedJobs(User user) {
+		return user.getAppliedJobs();
 	}
 
 }

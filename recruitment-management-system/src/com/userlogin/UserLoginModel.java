@@ -17,7 +17,7 @@ public class UserLoginModel implements UserLoginModelCallBack {
 
 		User userLogin(int userID, String password);
 
-		User userSignin(String name, String password, long mobileNumber, List<String> skills);
+		User userSignin(String name, String password, String mobileNumber, List<String> skills);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class UserLoginModel implements UserLoginModelCallBack {
 	}
 
 	@Override
-	public User userSignin(String name, String password, long mobileNumber, List<String> skills) {
+	public User userSignin(String name, String password, String mobileNumber, List<String> skills) {
 		return DBRepository.getInstance().createAndGetUser(name, password, mobileNumber, skills);
 	}
 }

@@ -29,6 +29,21 @@ public class JobNotification {
 		appliedCandidates.add(user);
 	}
 
+	@Override
+	public String toString() {
+		return "\t" + jobTitle + "\nPosted by : " + hr.getCompanyName() + "\nJob ID : " + jobID
+				+ "\nNumber of vacancies : " + numberOfVacancies + "\napplication end date : " + applicationEndDate
+				+ "\nRequired skills : " + getSkillString() + "\nTotal applicants : " + appliedCandidates.size();
+	}
+
+	private String getSkillString() {
+		String skillSet = "";
+		for (String skill : skills) {
+			skillSet += skill + " ";
+		}
+		return skillSet;
+	}
+
 	public List<User> getAppliedCandidates() {
 		return appliedCandidates;
 	}
@@ -44,5 +59,6 @@ public class JobNotification {
 	public List<String> getSkills() {
 		return skills;
 	}
+
 
 }

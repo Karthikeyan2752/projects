@@ -21,8 +21,9 @@ public class UserLoginController implements UserLoginControllerModelCallBack, Us
 	}
 
 	@Override
-	public User userSignin(String name, String password, long mobileNumber, List<String> skills) {
+	public User userSignin(String name, String password, String mobileNumber, List<String> skills) {
 		return userLoginModel.userSignin(name, password, mobileNumber, skills);
 	}
+
 
 }
