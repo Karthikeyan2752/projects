@@ -24,7 +24,8 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "--------------------------\n" + post + "\n!" + thumbsDowns.size() + " ^" + thumbsUps.size();
+		return "--------------------------\n" + "posted on : " + timeStamp + "\n" + wanderer.getName() + " says : /n"
+				+ post + "\n!" + thumbsDowns.size() + " ^" + thumbsUps.size();
 	}
 	public List<Wanderer> getThumbsUps() {
 		return thumbsUps;
