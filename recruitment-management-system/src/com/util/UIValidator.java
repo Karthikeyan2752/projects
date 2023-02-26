@@ -2,50 +2,41 @@ package com.util;
 
 import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UIValidator {
 
-	private static final Scanner scanner = new Scanner(System.in);
-	private static final String EMAIL_PATTERN = "^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$";
-	private static final String MOBILE_PATTERN = "^[0-9]{10}$";
-	private static final String NAME_PATTERN = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
-
+	private static Scanner scanner = new Scanner(System.in);
 	public static String getEmail() {
-		String input;
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher;
-		do {
-			System.out.println("Enter your email:");
-			input = scanner.nextLine();
-			matcher = pattern.matcher(input);
-		} while (!matcher.matches());
-		return input;
+		System.out.println("Enter your email id : \n");
+		String email = scanner.next();
+		return email;
 	}
 
 	public static String getMobileNumber() {
-		String input;
-		Pattern pattern = Pattern.compile(MOBILE_PATTERN);
-		Matcher matcher;
-		do {
-			System.out.println("Enter your mobile number (10 digits):");
-			input = scanner.nextLine();
-			matcher = pattern.matcher(input);
-		} while (!matcher.matches());
-		return input;
+		System.out.println("Enter your mobile number : \n");
+		String mobile = scanner.next();
+		if (mobile.length() != 10 && !isContainsOtherChar(mobile)) {
+			return getMobileNumber();
+		}
+		return mobile;
+	}
+
+	private static boolean isContainsOtherChar(String mobile) {
+		for (char c : mobile.toCharArray()) {
+			if (Character.isDigit(c)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static String getName() {
-		String input;
-		Pattern pattern = Pattern.compile(NAME_PATTERN);
-		Matcher matcher;
-		do {
-			System.out.println("Please enter your name:");
-			input = scanner.nextLine();
-			matcher = pattern.matcher(input);
-		} while (!matcher.matches());
-		return input;
+		System.out.println("Enter your name : \n");
+		String name = scanner.next();
+		if (isContainsOtherChar(name)) {
+			return getName();
+		}
+		return name;
 	}
 
 	public static byte getChoice() {
