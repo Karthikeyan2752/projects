@@ -71,4 +71,19 @@ public class WandererControlController implements WandererControlControllerCallB
 		return wandererControlModel.getNotifications(wanderer);
 	}
 
+	@Override
+	public List<Wanderer> getFollowers(Wanderer wanderer) {
+		return wandererControlModel.getFollowers(wanderer);
+	}
+
+	@Override
+	public List<Wanderer> getFollowings(Wanderer wanderer) {
+		return wandererControlModel.getFollowings(wanderer);
+	}
+
+	@Override
+	public List<Post> getPost(Wanderer wanderer) {
+		return wandererControlModel.getPost(wanderer);
+	}
+
 }

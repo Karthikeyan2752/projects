@@ -84,7 +84,7 @@ public class Wanderer {
 
 	@Override
 	public String toString() {
-		return name + "\nbio : " + "\nno of posts : " + posts.size();
+		return "ID : " + userId + "\n" + name + "\nbio : " + bio + "\nno of posts : " + posts.size();
 	}
 	public void setPassword(String password) {
 		this.password = password;

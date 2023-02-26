@@ -12,10 +12,12 @@ public class Post {
 	private List<Wanderer> thumbsDowns = new ArrayList<>();
 	private List<Comment> comments = new ArrayList<>();
 	private Wanderer wanderer;
+	private int postId;
 
-	public Post(String post, Date timeStamp, Wanderer wanderer) {
+	public Post(int postId, String post, Date timeStamp, Wanderer wanderer) {
 		super();
 		this.post = post;
+		this.postId = postId;
 		this.timeStamp = timeStamp;
 		this.wanderer = wanderer;
 	}
@@ -36,6 +38,10 @@ public class Post {
 		return comments;
 	}
 
+	public int postId() {
+		return postId;
+	}
+
 	public void addComment(Comment comment) {
 		comments.add(comment);
 	}
@@ -44,8 +50,8 @@ public class Post {
 		return wanderer;
 	}
 
-	public Post(Wanderer wanderer) {
-		this.wanderer = wanderer;
+	public int getId() {
+		return postId;
 	}
 
 }

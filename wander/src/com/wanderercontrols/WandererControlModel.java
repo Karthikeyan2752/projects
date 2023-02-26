@@ -70,4 +70,19 @@ public class WandererControlModel implements WandererControlModelCallBack {
 		return DBRepository.getInstance().getNotifications(wanderer);
 	}
 
+	@Override
+	public List<Wanderer> getFollowers(Wanderer wanderer) {
+		return DBRepository.getInstance().getFollowers(wanderer);
+	}
+
+	@Override
+	public List<Wanderer> getFollowings(Wanderer wanderer) {
+		return DBRepository.getInstance().getFollowings(wanderer);
+	}
+
+	@Override
+	public List<Post> getPost(Wanderer wanderer) {
+		return DBRepository.getInstance().getPost(wanderer);
+	}
+
 }

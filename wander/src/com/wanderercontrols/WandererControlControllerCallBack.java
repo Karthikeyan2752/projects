@@ -30,4 +30,10 @@ public interface WandererControlControllerCallBack {
 
 	Stack<String> getNotifications(Wanderer wanderer);
 
+	List<Wanderer> getFollowers(Wanderer wanderer);
+
+	List<Wanderer> getFollowings(Wanderer wanderer);
+
+	List<Post> getPost(Wanderer wanderer);
+
 }

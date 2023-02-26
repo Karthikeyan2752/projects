@@ -11,16 +11,20 @@ import java.util.Stack;
 import com.dto.Admin;
 import com.dto.Credentials;
 import com.dto.Post;
+import com.dto.Report;
 import com.dto.Wanderer;
 
 public class DBRepository {
 
 	private static DBRepository dBRInstance;
-	private static int userId;
+	private static int userId = 1;
+	private static int postId;
 	private List<Credentials> adminCredentials = new ArrayList<Credentials>();
 	private List<Wanderer> wanderers = new ArrayList<>();
 	private List<Post> posts = new ArrayList<>();
 	private Admin admin = null;
+
+	private List<Report> reports = new ArrayList<>();
 
 	private DBRepository() {
 
@@ -50,7 +54,7 @@ public class DBRepository {
 		k.setPassword("123");
 		kk.setPassword("123");
 		Wanderer t = new Wanderer("tom", "t@gmail.com", "1234567890", new Date(), 2, "bio2");
-		Post post = new Post("sasas", new Date(), t);
+		Post post = new Post(postId++, "sasas", new Date(), t);
 		posts.add(post);
 		t.setPassword("123");
 		wanderers.add(k);
@@ -70,6 +74,7 @@ public class DBRepository {
 
 	public Wanderer signUp(String name, String email, String mobile, String bio, Date dOB, String password) {
 		Wanderer wanderer = new Wanderer(name, email, mobile, dOB, userId++, bio);
+		wanderer.setPassword(password);
 		wanderers.add(wanderer);
 		return wanderer;
 	}
@@ -116,7 +121,7 @@ public class DBRepository {
 	}
 
 	public String post(Wanderer wanderer, String postString) {
-		Post post = new Post(postString, new Date(), wanderer);
+		Post post = new Post(postId++, postString, new Date(), wanderer);
 		wanderer.getPosts().add(post);
 		posts.add(post);
 		for (Wanderer wanderer2 : wanderer.getFollowers()) {
@@ -156,12 +161,12 @@ public class DBRepository {
 		}
 		List<Post> randomPosts = new ArrayList<>();
 		Random r = new Random();
-		int maxSize = 4;
-		if (posts.size() < 5) {
-			maxSize = posts.size() - 1;
-		}
+		int maxSize = posts.size() - 1;
 		Set<Integer> set = new HashSet<>();
-		int index = maxSize;
+		int index = 5;
+		if (maxSize + 1 < index) {
+			index = maxSize+1;
+		}
 		while (index > 0) {
 			int i = r.nextInt(maxSize) + 0;
 			if (set.add(i)) {
@@ -186,6 +191,57 @@ public class DBRepository {
 
 	public Stack<String> getNotifications(Wanderer wanderer) {
 		return wanderer.getNotifications();
+	}
+
+	public List<Wanderer> getFollowings(Wanderer wanderer) {
+		return wanderer.getFollowers();
+	}
+
+	public List<Wanderer> getFollowers(Wanderer wanderer) {
+		return wanderer.getFollowings();
+	}
+
+	public String addReports(String reason, Post post, Wanderer wanderer) {
+
+		Report report = new Report(reason, post, wanderer);
+		reports.add(report);
+		return "post reported, waiting for admin actions ";
+	}
+
+	public List<Report> getReports() {
+		return reports;
+	}
+
+	public String deleteAuthor(Post post, Wanderer author) {
+		for (Post post1 : posts) {
+			if (post1.equals(post)) {
+				posts.remove(post1);
+			}
+			break;
+		}
+		for (Wanderer wanderer : wanderers) {
+			if (wanderer.equals(author)) {
+				wanderers.remove(wanderer);
+			}
+			break;
+		}
+		return "post removed and author delted successfully!";
+	}
+
+	public String deletePost(Post post, Wanderer author) {
+		for (Post post1 : posts) {
+			if (post1.equals(post)) {
+				posts.remove(post1);
+			}
+			break;
+		}
+		author.getPosts().remove(post);
+		author.getNotifications().push("your post was deleted, because it is against our community guidelines");
+		return "post deleted successfully";
+	}
+
+	public List<Post> getPost(Wanderer wanderer) {
+		return wanderer.getPosts();
 	}
 
 }

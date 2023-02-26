@@ -15,6 +15,24 @@ public class WandererLoginView implements WandererLoginViewCallBack {
 		this.wandererLoginController = new WandererLoginController(this);
 	}
 
+	public void start() {
+		System.out.println("Already a wanderer ?\nEnter 1 for login:\n");
+		System.out.println("New User ? \nEnter 2 for sign up and start wandering \n");
+		System.out.println("Enter 0 to exit\n");
+		byte choice = UIValidator.getChoice();
+		switch (choice) {
+		case 1:
+			login();
+			break;
+		case 2:
+			signUp();
+			break;
+		default:
+			return;
+
+		}
+
+	}
 	public void login() {
 		System.out.println("\t>>> Wanderer Login page >>>\n");
 		System.out.println("Enter your user ID : \n");
@@ -25,10 +43,8 @@ public class WandererLoginView implements WandererLoginViewCallBack {
 		WandererControlView controls = new WandererControlView();
 		if (wanderer != null) {
 			controls.displayControls(wanderer);
-		} else {
-			login();
 		}
-		login();
+		start();
 
 	}
 
@@ -46,11 +62,11 @@ public class WandererLoginView implements WandererLoginViewCallBack {
 		Wanderer wanderer = wandererLoginController.signUp(name, email, mobile, bio, dOB, password);
 		WandererControlView controls = new WandererControlView();
 		if (wanderer != null) {
+			System.out.println("Your details : \n");
+			System.out.println(wanderer.toString());
 			controls.displayControls(wanderer);
-		} else {
-			signUp();
 		}
-		signUp();
+		start();
 	}
 
 }
