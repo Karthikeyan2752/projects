@@ -1,4 +1,4 @@
-package com.main;
+package com.home;
 
 import java.util.Scanner;
 
@@ -6,7 +6,7 @@ import com.adminlogin.AdminLoginView;
 import com.hrlogin.HRLoginView;
 import com.userlogin.UserLoginView;
 
-public class Main {
+public class Home {
 
 	public static void main(String[] args) {
 		start();
