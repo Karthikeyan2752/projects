@@ -23,7 +23,6 @@ public class DBRepository {
 	private List<Wanderer> wanderers = new ArrayList<>();
 	private List<Post> posts = new ArrayList<>();
 	private Admin admin = null;
-
 	private List<Report> reports = new ArrayList<>();
 
 	private DBRepository() {

@@ -73,6 +73,7 @@ public class AdminLoginView implements AdminLoginViewCallBack {
 		System.out.println("\n-->Welcome Admin<--\n");
 		AdminControlView adminControlView = new AdminControlView();
 		adminControlView.displayControls();
+		start();
 	}
 
 	private void callTicketBooking() {

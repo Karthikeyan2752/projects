@@ -64,7 +64,7 @@ public class DBRepository {
 		chennaiExpress.setAvailableRAC(1);
 		chennaiExpress.setAvailableUpperBerth(1);
 		chennaiExpress.setWaitingList(1);
-		trainMap.put(chennai, trains);
+		trainMap.put(chennai, List.of(chennaiExpress));
 	}
 
 	public User createAndGetUser(int userID, String name, String password, long mobileNumber) {
@@ -214,30 +214,16 @@ public class DBRepository {
 	}
 
 	public void addTrains(String name, int seats, String depature, String arrival, Date date) {
-		RailwayStation from = null;
-		RailwayStation to = null;
-		for (RailwayStation station : trainMap.keySet()) {
-			if (station.getLocation() == depature) {
-				from = station;
-			} else {
-				if (station.getLocation() == arrival) {
-					to = station;
-				}
-			}
-		}
+		RailwayStation from = new RailwayStation(depature);
+		RailwayStation to = new RailwayStation(arrival);
 
-		Train train = null;
-		if (from != null && to != null) {
-			train = new Train(name, from, to, date);
+		Train train = new Train(name, from, to, date);
 			train.setAvailableLowerBerth(seats);
 			train.setAvailableMiddleBerth(seats);
 			train.setAvailableRAC(seats);
 			train.setWaitingList(seats);
-			trainMap.get(from).add(train);
+			trainMap.put(from, List.of(train));
 			trains.add(train);
-		}
-
-
 	}
 
 	public String deleteTrains(String name) {
