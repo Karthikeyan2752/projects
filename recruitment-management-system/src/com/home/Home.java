@@ -27,7 +27,9 @@ public class Home {
 		int choice = scanner.nextInt();
 		switch (choice) {
 		case 1:
-			adminLoginView.start();
+			// adminLoginView.start();
+			System.out.println("coming soon");
+			start();
 			break;
 		case 2:
 			hrLoginView.hRLogin();

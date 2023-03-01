@@ -1,6 +1,6 @@
 package com.util;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UIValidator {
@@ -65,14 +65,14 @@ public class UIValidator {
 		return input;
 	}
 
-	public static Date getDateFromUser() {
+	public static LocalDate getDateFromUser() {
 		System.out.println("Please enter date : (mm/dd/yyy)");
 		String dateString = scanner.next();
-		Date cdate = new Date();
-		Date date = null;
+		LocalDate cdate = LocalDate.now();
+		LocalDate date = null;
 		try {
-			date = new Date(dateString);
-			if (date.before(cdate)) {
+			date = LocalDate.parse(dateString);
+			if (date.isBefore(cdate)) {
 				System.out.println("Please enter correct date : ");
 				getDateFromUser();
 			}

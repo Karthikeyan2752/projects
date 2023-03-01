@@ -28,4 +28,9 @@ public class ApplyController implements ApplyControllerCallBack {
 		return applyModel.getAppliedJobs(user);
 	}
 
+	@Override
+	public List<JobNotification> getCallLetters(User user) {
+		return applyModel.getCallLetters(user);
+	}
+
 }

@@ -1,7 +1,7 @@
 package com.hrlogin;
 
 import com.dto.HR;
-import com.repository.DBRepository;
+import com.repository.DB;
 
 public class HRLoginModel implements HRLoginModelCallBack {
 
@@ -12,13 +12,13 @@ public class HRLoginModel implements HRLoginModelCallBack {
 	}
 
 	@Override
-	public HR sigin(String name, String companyName, String password, String mobileNumber) {
-		return DBRepository.getInstance().hRSignin(name, companyName, password, mobileNumber);
+	public HR sigin(String name, String email, String companyName, String password, String mobileNumber) {
+		return DB.getInstance().hRSignin(name, email, companyName, password, mobileNumber);
 	}
 
 	@Override
 	public HR login(int userID, String password) {
-		return DBRepository.getInstance().hRLogin(userID, password);
+		return DB.getInstance().getHR(userID, password);
 	}
 
 }

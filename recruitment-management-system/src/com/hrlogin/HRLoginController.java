@@ -13,8 +13,8 @@ public class HRLoginController implements HRLoginControllerCallBack {
 	}
 
 	@Override
-	public HR signin(String name, String companyName, String password, String mobileNumber) {
-		return hRLoginModel.sigin(name, companyName, password, mobileNumber);
+	public HR signin(String name, String email, String companyName, String password, String mobileNumber) {
+		return hRLoginModel.sigin(name, email, companyName, password, mobileNumber);
 	}
 
 	@Override

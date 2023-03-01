@@ -3,7 +3,6 @@ package com.apply;
 import java.util.List;
 import java.util.Scanner;
 
-import com.dto.CallLetter;
 import com.dto.JobNotification;
 import com.dto.User;
 import com.util.UIValidator;
@@ -46,13 +45,13 @@ public class ApplyView implements ApplyViewCallBack {
 	}
 
 	private void viewCallLetters(User user) {
-		if (user.getCallLetter().isEmpty()) {
-			System.out.println("No call letters received !");
-		} else {
-			for (CallLetter callLetter : user.getCallLetter()) {
-				System.out.println(callLetter.toString());
-			}
+		List<JobNotification> jobs = applyController.getCallLetters(user);
+
+		for (JobNotification job : jobs) {
+			System.out.println(job.getHR().toString());
+			System.out.println(job.toString());
 		}
+
 		displayControls(user);
 
 	}
@@ -74,18 +73,22 @@ public class ApplyView implements ApplyViewCallBack {
 		if (!jobs.isEmpty()) {
 			for (JobNotification job : jobs) {
 				System.out.println(job.toString());
+				apply(user);
 			}
 		} else {
 			System.out.println("Currently no jobs are available !");
 		}
-		apply(user);
+
 	}
 
 	private void apply(User user) {
 		System.out.println("Enter the respective job ID to apply : ");
+		System.out.println("Enter 0 skip and go to next job : \n");
 		int jobID = UIValidator.getIntChoice();
-		applyController.apply(user, jobID);
-		System.out.println("Applied successfully, waiting for HR response\n");
+		if (jobID != 0) {
+			applyController.apply(user, jobID);
+			System.out.println("Applied successfully, waiting for HR response\n");
+		}
 		displayControls(user);
 	}
 

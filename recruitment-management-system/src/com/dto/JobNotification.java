@@ -1,64 +1,46 @@
 package com.dto;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 public class JobNotification {
 
 	private int jobID;
 	private String jobTitle;
 	private int numberOfVacancies;
-	private Date applicationEndDate;
+	private LocalDate applicationEndDate;
 	private HR hr;
-	private List<String> skills = new ArrayList<>();
-	private List<User> appliedCandidates = new ArrayList<>();
+	private String skills;
 
-	public JobNotification(int jobID, String jobTitle, Date applicationEndDate, List<String> skills, HR hr,
+	public JobNotification(int jobID, String jobTitle, LocalDate applicationEndDate, String skills, HR hr,
 			int numberOfVacancies) {
 		super();
 		this.jobTitle = jobTitle;
 		this.jobID = jobID;
-		this.numberOfVacancies = numberOfVacancies;
-		this.applicationEndDate = applicationEndDate;
 		this.hr = hr;
+		this.numberOfVacancies = numberOfVacancies;
 		this.skills = skills;
 	}
 
-	public void addCandiates(User user) {
-		appliedCandidates.add(user);
+	public HR getHR() {
+		return hr;
 	}
-
 	@Override
 	public String toString() {
 		return "\t" + jobTitle + "\nPosted by : " + hr.getCompanyName() + "\nJob ID : " + jobID
 				+ "\nNumber of vacancies : " + numberOfVacancies + "\napplication end date : " + applicationEndDate
-				+ "\nRequired skills : " + getSkillString() + "\nTotal applicants : " + appliedCandidates.size();
+				+ "\nRequired skills : " + getSkills() + "\n";
 	}
 
-	private String getSkillString() {
-		String skillSet = "";
-		for (String skill : skills) {
-			skillSet += skill + " ";
-		}
-		return skillSet;
-	}
-
-	public List<User> getAppliedCandidates() {
-		return appliedCandidates;
+	public String getSkills() {
+		return skills;
 	}
 
 	public int getID() {
 		return jobID;
 	}
 
-	public HR getHR() {
-		return hr;
+	public String getName() {
+		return jobTitle;
 	}
-
-	public List<String> getSkills() {
-		return skills;
-	}
-
 
 }

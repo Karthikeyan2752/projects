@@ -35,9 +35,11 @@ public class HRLoginView implements HRLoginViewCallBack {
 		String mobileNumber = UIValidator.getMobileNumber();
 		System.out.println("Enter your organisation name : \n");
 		String companyName = scanner.next();
+		System.out.println("Enter your email id : \n");
+		String email = scanner.next();
 		System.out.println("Enter your password : \n");
 		String password = scanner.next();
-		HR hr = hRLoginController.signin(name, companyName, password, mobileNumber);
+		HR hr = hRLoginController.signin(name, email, companyName, password, mobileNumber);
 		if (hr == null) {
 			System.out.println("Something went wrong! Try again");
 			hRLogin();

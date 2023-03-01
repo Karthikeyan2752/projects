@@ -1,9 +1,7 @@
 package com.userlogin;
 
-import java.util.List;
-
 import com.dto.User;
-import com.repository.DBRepository;
+import com.repository.DB;
 
 public class UserLoginModel implements UserLoginModelCallBack {
 
@@ -17,16 +15,18 @@ public class UserLoginModel implements UserLoginModelCallBack {
 
 		User userLogin(int userID, String password);
 
-		User userSignin(String name, String password, String mobileNumber, List<String> skills);
+		User userSignin(String name, String email, String qualification, String password, String mobileNumber,
+				String skills);
 	}
 
 	@Override
 	public User userLogin(int userID, String password) {
-		return DBRepository.getInstance().getUser(userID, password);
+		return DB.getInstance().getUser(userID, password);
 	}
 
 	@Override
-	public User userSignin(String name, String password, String mobileNumber, List<String> skills) {
-		return DBRepository.getInstance().createAndGetUser(name, password, mobileNumber, skills);
+	public User userSignin(String name, String email, String qualification, String password, String mobileNumber,
+			String skills) {
+		return DB.getInstance().createAndGetUser(name, email, qualification, password, mobileNumber, skills);
 	}
 }

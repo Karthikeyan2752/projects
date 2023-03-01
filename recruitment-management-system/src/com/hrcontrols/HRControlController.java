@@ -1,6 +1,6 @@
 package com.hrcontrols;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.dto.HR;
@@ -18,9 +18,9 @@ public class HRControlController implements HRControlControllerCallBack {
 	}
 
 	@Override
-	public int postJob(HR hr, String title, int numberOfVacancies, Date endDate, int minExperience, int maxExperience,
-			List<String> skills) {
-		return hRControlModel.postJob(hr, title, numberOfVacancies, endDate, minExperience, maxExperience, skills);
+	public int postJob(HR hr, String title, int numberOfVacancies, LocalDate endDate,
+			String skills) {
+		return hRControlModel.postJob(hr, title, numberOfVacancies, endDate, skills);
 
 	}
 
@@ -35,8 +35,8 @@ public class HRControlController implements HRControlControllerCallBack {
 	}
 
 	@Override
-	public String sendCallLetter(HR hr, List<User> selectedCandidates, JobNotification job, Date interviewDate) {
-		return hRControlModel.sendCallLetter(hr, selectedCandidates, job, interviewDate);
+	public String sendCallLetter(HR hr, List<User> selectedCandidates, JobNotification job) {
+		return hRControlModel.sendCallLetter(hr, selectedCandidates, job);
 	}
 
 	@Override

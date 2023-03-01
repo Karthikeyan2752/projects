@@ -13,4 +13,6 @@ public interface ApplyControllerCallBack {
 
 	List<JobNotification> getAppliedJobs(User user);
 
+	List<JobNotification> getCallLetters(User user);
+
 }

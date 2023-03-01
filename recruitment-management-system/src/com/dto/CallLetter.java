@@ -18,9 +18,11 @@ public class CallLetter {
 
 	@Override
 	public String toString() {
-		return "Interview Date: \n" + date + "\nFrom : \n" + hr.getCompanyName() + "\nTo : \n" + user.toString()
-				+ "\nFor :\n"
-				+ job.toString();
+		return "-----------------------" + hr.getCompanyName() + "-----------------------\n|\n"
+				+ "| Interview Date: \n| " + date + "\n| From : \n| HR of " + hr.getCompanyName() + "\n| To : \n| "
+				+ user.getName() + "\n| For :\n| " + job.getName() + "\n|\tKindly bring your resume\n| "
+				+ "\n|\t   -regards\n|\t\t" + hr.getName()
+				+ "\n----------------------------------------------------------------";
 	}
 
 }

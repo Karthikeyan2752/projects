@@ -1,7 +1,7 @@
 package com.hrcontrols;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -82,7 +82,7 @@ public class HRControlView implements HRControlViewCallBack {
 			System.out.println("Job not found! Try again");
 			scheduleInterview(hr);
 		}
-		List<User> appliedCandidates = job.getAppliedCandidates();
+		List<User> appliedCandidates = hRControlController.getAppliedCandidates(job.getID());
 		for (User appliedCandidate : appliedCandidates) {
 			System.out.println(appliedCandidate.toString());
 		}
@@ -109,9 +109,7 @@ public class HRControlView implements HRControlViewCallBack {
 			}
 
 		}
-		System.out.println("Enter Interview date : \n");
-		Date interviewDate = UIValidator.getDateFromUser();
-		hRControlController.sendCallLetter(hr, selectedCandidates, job, interviewDate);
+		hRControlController.sendCallLetter(hr, selectedCandidates, job);
 		displayControls(hr);
 	}
 
@@ -139,23 +137,11 @@ public class HRControlView implements HRControlViewCallBack {
 		String title = scanner.next();
 		System.out.println("Enter the number of vacancies : \n");
 		int numberOfVacancies = UIValidator.getIntChoice();
-		System.out.println("Enter the last date for apply : \n");
-		Date endDate = UIValidator.getDateFromUser();
-		System.out.println("Enter the minimum years of experience : ");
-		int minExperience = UIValidator.getIntChoice();
-		System.out.println("Enter the maximum years of experience : ");
-		int maxExperience = UIValidator.getIntChoice();
-		System.out.println("Enter the number of required skills : \n");
-		int numberOfSkills = UIValidator.getIntChoice();
-		List<String> skills = new ArrayList<>();
-		for (int i = 0; i < numberOfSkills; i++) {
-			System.out.println("Enter the required skill : \n");
-			String skill = scanner.next();
-			skills.add(skill);
-		}
-		
-		int jobID = hRControlController.postJob(hr, title, numberOfVacancies, endDate, minExperience, maxExperience,
-				skills);
+		System.out.println("Enter the required skills : (separated by commas)\n");
+		String skills = scanner.next();
+		System.out.println("Enter the interview date : \n");
+		LocalDate endDate = UIValidator.getDateFromUser();
+		int jobID = hRControlController.postJob(hr, title, numberOfVacancies, endDate, skills);
 		System.out.println("Job notification posted successfully!");
 		System.out.println("Note job ID : " + jobID + "for further actions");
 		displayControls(hr);

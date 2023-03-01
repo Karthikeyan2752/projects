@@ -1,7 +1,5 @@
 package com.userlogin;
 
-import java.util.List;
-
 import com.dto.User;
 import com.userlogin.UserLoginModel.UserLoginControllerModelCallBack;
 
@@ -21,8 +19,9 @@ public class UserLoginController implements UserLoginControllerModelCallBack, Us
 	}
 
 	@Override
-	public User userSignin(String name, String password, String mobileNumber, List<String> skills) {
-		return userLoginModel.userSignin(name, password, mobileNumber, skills);
+	public User userSignin(String name, String email, String qualification, String password, String mobileNumber,
+			String skills) {
+		return userLoginModel.userSignin(name, email, qualification, password, mobileNumber, skills);
 	}
 
 

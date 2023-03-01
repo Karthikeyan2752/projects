@@ -8,8 +8,18 @@ public class HR {
 	private String companyName;
 	private String name;
 	private String mobileNumber;
+	private String email;
 	private String password;
 	private List<JobNotification> jobs = new ArrayList<>();
+
+	public String getName() {
+		return name;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
 
 	public int getId() {
 		return id;
@@ -27,11 +37,12 @@ public class HR {
 		this.password = password;
 	}
 
-	public HR(int id, String name, String companyName, String mobileNumber) {
+	public HR(int id, String name, String companyName, String mobileNumber, String email) {
 		this.companyName = companyName;
 		this.id = id;
 		this.name = name;
 		this.mobileNumber = mobileNumber;
+		this.email = email;
 	}
 
 	public void addJobs(JobNotification job) {
@@ -47,7 +58,7 @@ public class HR {
 	}
 	@Override
 	public String toString() {
-		return "id\tname\tcompanyName" + id + "\t" + name + "\t" + companyName;
+		return "id\tname\tcompanyName" + id + "\t" + name + "\t" + companyName + "\n";
 	}
 
 }

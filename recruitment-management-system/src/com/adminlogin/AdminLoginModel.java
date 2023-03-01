@@ -1,7 +1,7 @@
 package com.adminlogin;
 
 import com.dto.Admin;
-import com.repository.DBRepository;
+import com.repository.DB;
 
 public class AdminLoginModel implements AdminLoginModelCallBack {
 
@@ -14,7 +14,7 @@ public class AdminLoginModel implements AdminLoginModelCallBack {
 	@Override
 	public void checkCredentials(String userName, String password) {
 		boolean canLogin = false;
-		Admin adminUser = DBRepository.getInstance().checkValidUser(userName, password);
+		Admin adminUser = DB.getInstance().checkValidUser(userName, password);
 		if (adminUser != null) {
 			adminLoginController.loginSuccess(adminUser);
 		} else {

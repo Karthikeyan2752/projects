@@ -1,32 +1,20 @@
 package com.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
 	private int userID;
 	private String name;
 	private String password;
 	private String mobileNumber;
-	private List<CallLetter> callLetters = new ArrayList<>();
-	private List<JobNotification> appliedJobs = new ArrayList<>();
-	private List<String> skills = new ArrayList<>();
+	private String skills;
+	private String qualification;
 
-	public User(int userID, String name, String password, String mobileNumber, List<String> skills) {
+	public User(int userID, String name, String mobileNumber, String skills, String qualification) {
 		this.skills = skills;
 		this.name = name;
 		this.userID = userID;
-		this.password = password;
+		this.qualification = qualification;
 		this.mobileNumber = mobileNumber;
-	}
-
-	public List<JobNotification> getAppliedJobs() {
-		return appliedJobs;
-	}
-
-	public void addJobs(JobNotification job) {
-		appliedJobs.add(job);
 	}
 
 	public int getUserID() {
@@ -41,12 +29,8 @@ public class User {
 		return password;
 	}
 
-	public void addCallLetter(CallLetter callLetter) {
-		callLetters.add(callLetter);
-	}
-
-	public List<CallLetter> getCallLetter() {
-		return callLetters;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
@@ -54,7 +38,7 @@ public class User {
 		return "user id : " + userID + "\nname : " + name + "\nmobile : " + mobileNumber + "\n";
 	}
 
-	public List<String> getSkills() {
+	public String getSkills() {
 		return skills;
 	}
 

@@ -1,7 +1,5 @@
 package com.userlogin;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.apply.ApplyView;
@@ -39,18 +37,13 @@ public class UserLoginView implements UserLoginViewCallBack {
 		String mobileNumber = UIValidator.getMobileNumber();
 		System.out.println("Enter your password : ");
 		String password = scanner.next();
-		System.out.println("Enter the number of skills your have : ");
-		System.out.println("You can only add upto 15 skills!\n");
-		int numberOfSkills = UIValidator.getIntChoiceForSkill();
-		List<String> skills = new ArrayList<>();
-
-		for (int i = 0; i < numberOfSkills; i++) {
-			System.out.println("Enter the skill : \n");
-			String skill = scanner.next();
-			skills.add(skill);
-		}
-
-		User user = userLoginController.userSignin(name, password, mobileNumber, skills);
+		System.out.println("Enter the your skills : (separated by commas)\n");
+		String skills = scanner.next();
+		System.out.println("Enter your email id : \n");
+		String email = scanner.next();
+		System.out.println("Enter your highest qualification : \n");
+		String qualification = scanner.next();
+		User user = userLoginController.userSignin(name, email, qualification, password, mobileNumber, skills);
 		System.out.println("Given details : ");
 		System.out.println("Note the User ID for further login");
 		System.out.println(user.toString());
