@@ -20,10 +20,12 @@ public class DB {
 	public static DB dBRInstance;
 	private static Connection connection;
 
+
 	private DB() {
 		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rms", "root", "Karthikn2752");
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("DB connection failed");
 		}
 	}
@@ -61,7 +63,8 @@ public class DB {
 			int hRID = result.getInt("hrId");
 			HR hr = getHR(hRID);
 			String skill = result.getString("skill");
-			job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies);
+			String description = result.getString("description");
+			job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies, description);
 
 		} catch (Exception e) {
 			System.out.println("error");
@@ -129,9 +132,10 @@ public class DB {
 			String name = result.getString("name");
 			String skill = result.getString("skill");
 			String mobile = result.getString("mobile");
-			String email = result.getString("email");
 			String qualification = result.getString("qualification");
-			user = new User(userID, name, mobile, skill, qualification);
+			String email = result.getString("email");
+			int experience = result.getInt("experience");
+			user = new User(userID, name, mobile, skill, qualification, email, experience);
 		} catch (Exception e) {
 			System.out.println("error");
 			return user;
@@ -155,7 +159,8 @@ public class DB {
 			String mobile = result.getString("mobile");
 			String email = result.getString("email");
 			String qualification = result.getString("qualification");
-			user = new User(userID, name, mobile, skill, qualification);
+			int experience = result.getInt("experience");
+			user = new User(userID, name, mobile, skill, qualification, email, experience);
 		} catch (Exception e) {
 			System.out.println("error");
 			return user;
@@ -178,6 +183,37 @@ public class DB {
 		return "somwthing went wrong\n";
 	}
 
+	public List<JobNotification> getJobsUserNotApplied(int userId) {
+		List<JobNotification> jobs = new ArrayList<>();
+		JobNotification job = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		try {
+
+			String query2 = "SELECT * FROM job WHERE jid NOT IN (SELECT jid FROM appliedcandidates WHERE uid = ?)";
+			statement = connection.prepareStatement(query2);
+			statement.setInt(1, userId);
+			result = statement.executeQuery();
+			while (result.next()) {
+				int jobID = result.getInt("jid");
+				String title = result.getString("title");
+				String dateString = result.getString("endDate");
+				LocalDate date = LocalDate.parse(dateString);
+				int noOfVacancies = result.getInt("noOfVacancies");
+				int hRID = result.getInt("hrId");
+				HR hr = getHR(hRID);
+				String skill = result.getString("skill");
+				String description = result.getString("description");
+				job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies, description);
+				jobs.add(job);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return jobs;
+	}
+
 	public List<JobNotification> getJobs() {
 		List<JobNotification> jobs = new ArrayList<>();
 		JobNotification job = null;
@@ -193,12 +229,12 @@ public class DB {
 				String title = result.getString("title");
 				String dateString = result.getString("endDate");
 				LocalDate date = LocalDate.parse(dateString);
-				System.out.println(date);
 				int noOfVacancies = result.getInt("noOfVacancies");
 				int hRID = result.getInt("hrId");
 				HR hr = getHR(hRID);
 				String skill = result.getString("skill");
-				job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies);
+				String description = result.getString("description");
+				job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies, description);
 				jobs.add(job);
 			}
 		} catch (SQLException e) {
@@ -227,7 +263,8 @@ public class DB {
 				int hRID = result.getInt("hrId");
 				HR hr = getHR(hRID);
 				String skill = result.getString("skill");
-				job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies);
+				String description = result.getString("description");
+				job = new JobNotification(jobID, title, date, skill, hr, noOfVacancies, description);
 				jobs.add(job);
 			}
 		} catch (SQLException e) {
@@ -301,7 +338,6 @@ public class DB {
 			result = statement.executeQuery(query);
 			while (result.next()) {
 				int jobId = result.getInt("jid");
-				System.out.println(jobId);
 				JobNotification job = getJob(jobId);
 				callLetters.add(job);
 			}
@@ -313,7 +349,7 @@ public class DB {
 	}
 
 	public int postJob(HR hr, String title, int numberOfVacancies, LocalDate interviewDate,
-			String skills) {
+			String skills, String description) {
 		PreparedStatement ps = null;
 		ResultSet result = null;
 		int jobId = 0;
@@ -324,7 +360,7 @@ public class DB {
 			if (result.next()) {
 				jobId = result.getInt("max_jid");
 			}
-			query = "INSERT INTO job VALUES (?, ?, ?, ?, ?, ?)";
+			query = "INSERT INTO job VALUES (?, ?, ?, ?, ?, ?, ?)";
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, ++jobId);
 			ps.setString(2, title);
@@ -332,6 +368,7 @@ public class DB {
 			ps.setString(4, skills);
 			ps.setInt(5, hr.getId());
 			ps.setObject(6, interviewDate);
+			ps.setString(7, description);
 			ps.executeUpdate();
 			return jobId;
 		} catch (SQLException e) {
@@ -341,7 +378,7 @@ public class DB {
 	}
 
 	public User createAndGetUser(String name, String email, String qualification, String password, String mobileNumber,
-			String skills) {
+			String skills, int experience) {
 		User user = null;
 		Statement statement = null;
 		ResultSet result = null;
@@ -354,9 +391,9 @@ public class DB {
 				userId = result.getInt("max_uid");
 			}
 			query = "INSERT INTO users VALUES (" + ++userId + ", '" + name + "', '" + password + "', '" + mobileNumber
-					+ "', '" + email + "', '" + qualification + "', '" + skills + "')";
+					+ "', '" + email + "', '" + qualification + "', '" + skills + "','" + experience + "')";
 			statement.executeUpdate(query);
-			user = new User(userId, name, mobileNumber, skills, qualification);
+			user = new User(userId, name, mobileNumber, skills, qualification, email, experience);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -390,5 +427,25 @@ public class DB {
 	public Admin checkValidUser(String userName, String password) {
 		return null;
 	}
+
+
+	public void updateUser(int userID, String name, String mobileNumber, String skills, String qualification,
+			String email, int experience) {
+		try {
+			String sql = "UPDATE users SET name=?, mobile=?, skill=?, qualification=?, email=?, experience=? WHERE id=?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, name);
+			statement.setString(2, mobileNumber);
+			statement.setString(3, skills);
+			statement.setString(4, qualification);
+			statement.setString(5, email);
+			statement.setInt(6, experience);
+			statement.setInt(7, userID);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

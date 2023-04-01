@@ -8,13 +8,62 @@ public class User {
 	private String mobileNumber;
 	private String skills;
 	private String qualification;
+	private String email;
+	private int experience;
 
-	public User(int userID, String name, String mobileNumber, String skills, String qualification) {
+	public User(int userID, String name, String mobileNumber, String skills, String qualification, String email,
+			int experience) {
 		this.skills = skills;
 		this.name = name;
+		this.email = email;
+		this.experience = experience;
 		this.userID = userID;
 		this.qualification = qualification;
 		this.mobileNumber = mobileNumber;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public int getExperience() {
+		return experience;
 	}
 
 	public int getUserID() {

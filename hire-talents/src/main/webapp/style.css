@@ -1,76 +1,72 @@
-@charset "ISO-8859-1";
-/* Style for the header element */
-header {
-	background-color: #4CAF50;
-	padding: 20px;
-	color: white;
+/* Global Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
 }
 
-/* Style for the navigation menu */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+/* Header Styles */
+header {
+  background-color: #0d47a1;
+	color: #fff;
+	padding: 20px;
+}
+
 nav ul {
-	list-style: none;
 	margin: 0;
 	padding: 0;
+	list-style: none;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	justify-content: flex-end;
 }
-
-nav ul li {
+nav li {
 	margin: 0 10px;
 }
-
-nav ul li a {
-	color: white;
+nav a {
+	color: #fff;
 	text-decoration: none;
-	font-weight: bold;
-	font-size: 18px;
-	transition: color 0.3s ease;
+}
+nav a:hover {
+	text-decoration: underline;
 }
 
-nav ul li a:hover {
-	color: #ddd;
-}
-
-/* Style for the main element */
+/* Main Content Styles */
 main {
-	max-width: 800px;
-	margin: 0 auto;
-	padding: 20px;
-	text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0;
 }
 
-main h2 {
-	font-size: 36px;
-	color: #333;
-	margin-bottom: 20px;
+main a {
+  display: block;
+  margin: 20px 0;
+  padding: 20px 40px;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-main p {
-	font-size: 20px;
-	color: #777;
-	margin-bottom: 40px;
+main a:hover {
+  background-color: #333;
+  color: #fff;
 }
 
-form button {
-	background-color: #008CBA;
-	color: white;
-	padding: 14px 20px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-}
-
-form button:hover {
-	background-color: #005F6B;
-}
-
-/* Style for the footer element */
+/* Footer Styles */
 footer {
-	background-color: #f2f2f2;
-	padding: 20px;
-	text-align: center;
-	font-size: 16px;
-	color: #888;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
 }

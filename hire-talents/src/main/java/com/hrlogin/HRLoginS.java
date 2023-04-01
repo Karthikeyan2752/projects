@@ -23,9 +23,9 @@ public class HRLoginS extends HttpServlet {
 
 		HR hr = DB.getInstance().getHR(Integer.parseInt(userid), password);
 		if (hr != null) {
-			response.sendRedirect("UserHomePage.jsp");
+			response.sendRedirect("HRHomePage.jsp");
 		} else {
-			response.sendRedirect("UserLoginView.jsp");
+			response.sendRedirect("HRLoginView.jsp");
 		}
 	}
 }

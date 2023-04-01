@@ -53,6 +53,9 @@ public class HR {
 		return jobs;
 	}
 
+	public String getEmail() {
+		return email;
+	}
 	public String getCompanyName() {
 		return companyName;
 	}

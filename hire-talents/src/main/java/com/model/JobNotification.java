@@ -4,24 +4,50 @@ import java.time.LocalDate;
 
 public class JobNotification {
 
+
 	private int jobID;
 	private String jobTitle;
 	private int numberOfVacancies;
+	private String description;
 	private LocalDate applicationEndDate;
 	private HR hr;
 	private String skills;
 
 	public JobNotification(int jobID, String jobTitle, LocalDate applicationEndDate, String skills, HR hr,
-			int numberOfVacancies) {
+			int numberOfVacancies, String description) {
 		super();
 		this.jobTitle = jobTitle;
 		this.jobID = jobID;
+		this.description = description;
 		this.hr = hr;
 		this.applicationEndDate = applicationEndDate;
 		this.numberOfVacancies = numberOfVacancies;
 		this.skills = skills;
 	}
 
+	public int getJobID() {
+		return jobID;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public int getNumberOfVacancies() {
+		return numberOfVacancies;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public LocalDate getApplicationEndDate() {
+		return applicationEndDate;
+	}
+
+	public HR getHr() {
+		return hr;
+	}
 	public HR getHR() {
 		return hr;
 	}

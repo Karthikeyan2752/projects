@@ -21,7 +21,7 @@
 	</header>
 	<main>
 		<h2>HR Login</h2>
-		<form action="login.jsp">
+		<form action="HRLoginS">
 			<label for="userid">User ID:</label>
 			<input type="text" id="userid" name="userid"><br><br>
 			<label for="password">Password:</label>
