@@ -1,0 +1,39 @@
+@charset "ISO-8859-1";
+.profile {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	background-color: #f5f5f5;
+	padding: 10px;
+}
+
+h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+label {
+	display: inline-block;
+	width: 150px;
+	margin-bottom: 10px;
+}
+
+input[type="text"], input[type="password"] {
+	width: 300px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	margin-bottom: 10px;
+}
+
+input[type="submit"] {
+	background-color: #428bca;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #3071a9;
+}

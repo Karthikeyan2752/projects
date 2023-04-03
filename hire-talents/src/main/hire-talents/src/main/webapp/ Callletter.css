@@ -1,0 +1,45 @@
+@charset "ISO-8859-1";
+
+body {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	background-color: #f5f5f5;
+	padding: 10px;
+}
+
+h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.call-letter {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.call-letter h2 {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.call-letter p {
+	margin-bottom: 5px;
+}
+
+.call-letter .hr-info {
+	margin-top: 20px;
+	border-top: 1px solid #ddd;
+	padding-top: 10px;
+}
+
+.call-letter .hr-info h3 {
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+.call-letter .hr-info p {
+	margin-bottom: 5px;
+}
