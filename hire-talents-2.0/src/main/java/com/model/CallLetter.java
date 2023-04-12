@@ -1,16 +1,19 @@
 package com.model;
 
 public class CallLetter {
-	private HR hr;
+
 	private User user;
 	private JobNotification job;
 	private String date;
 	private String venue;
 	private String time;
 
-	public CallLetter(HR hr, User user, JobNotification job, String date, String venue, String time) {
+	public CallLetter() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public CallLetter(User user, JobNotification job, String date, String venue, String time) {
 		super();
-		this.hr = hr;
 		this.venue = venue;
 		this.date = date;
 		this.user = user;
@@ -19,7 +22,7 @@ public class CallLetter {
 	}
 
 	public HR getHr() {
-		return hr;
+		return job.getHr();
 	}
 
 	public User getUser() {
@@ -40,14 +43,6 @@ public class CallLetter {
 
 	public String getTime() {
 		return time;
-	}
-	@Override
-	public String toString() {
-		return "-----------------------" + hr.getCompanyName() + "-----------------------\n|\n"
-				+ "| Interview Date: \n| " + date + "\n| From : \n| HR of " + hr.getCompanyName() + "\n| To : \n| "
-				+ user.getName() + "\n| For :\n| " + job.getName() + "\n|\tKindly bring your resume\n| "
-				+ "\n|\t   -regards\n|\t\t" + hr.getName()
-				+ "\n----------------------------------------------------------------";
 	}
 
 }

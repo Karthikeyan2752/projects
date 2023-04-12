@@ -17,12 +17,14 @@ public class HRLoginS extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String userid = request.getParameter("userid");
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		HR hr = DB.getInstance().getHR(email, password);
+		int postedJobs = DB.getInstance().getPostedJobsCount(hr.getId());
+		int selectedCandidates = DB.getInstance().getSelectedCandidatesCount(hr.getId());
 
-		HR hr = DB.getInstance().getHR(Integer.parseInt(userid), password);
 		if (hr != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("name", hr.getName());
@@ -30,6 +32,11 @@ public class HRLoginS extends HttpServlet {
 			session.setAttribute("userID", hr.getId());
 			session.setAttribute("email", hr.getEmail());
 			session.setAttribute("companyName", hr.getCompanyName());
+			session.setAttribute("about", hr.getAbout());
+			session.setAttribute("location", hr.getLocation());
+			session.setAttribute("website", hr.getWebsiteURL());
+			session.setAttribute("postedJobs", postedJobs);
+			session.setAttribute("hiredCandidates", selectedCandidates);
 			response.sendRedirect("HRHome.jsp");
 		} else {
 			response.sendRedirect("HRLoginView.jsp");

@@ -95,10 +95,13 @@ function validateForm() {
 		    <input type="text" id="qualification" name="qualification" required><br><br>
 		    <label for="experience">Experience:</label>
 		    <input type="number" id="experience" name="experience" required><br><br>
+		    <label for="location">Location:</label>
+		    <input type="text" id="location" name="location" required><br><br>
+		    <label for="about">Write something about you:</label>
+		    <input type="text" id="about" name="about" required><br><br>
 		    <button type="submit">Sign Up</button>
 		    <button type="reset">Reset</button>
 		</form>
-
 	</main>
 	<footer>
 		<p>&copy; 2023 Resilience Cyber Solutions. All rights reserved.</p>

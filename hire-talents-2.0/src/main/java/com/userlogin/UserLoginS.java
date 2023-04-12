@@ -28,6 +28,7 @@ public class UserLoginS extends HttpServlet {
 		session.setAttribute("mobileNumber", user.getMobileNumber());
 		session.setAttribute("userID", user.getUserID());
 		session.setAttribute("email", user.getEmail());
+		session.setAttribute("location", user.getLocation());
 		session.setAttribute("experience", user.getExperience());
 		session.setAttribute("skills", user.getSkills());
 		session.setAttribute("qualification", user.getQualification());
@@ -35,6 +36,7 @@ public class UserLoginS extends HttpServlet {
 		int appliedJobs = new UserLoginViewModel().getAppliedJobsCount(user.getUserID());
 		int selectedJobs = new UserLoginViewModel().getSelectedJobsCount(user.getUserID());
 		session.setAttribute("appliedJobs", appliedJobs);
+		session.setAttribute("about", user.getAbout());
 		session.setAttribute("selectedJobs", selectedJobs);
 
 		if (user != null) {

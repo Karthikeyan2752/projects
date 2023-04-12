@@ -26,11 +26,11 @@ public class User {
 		this.mobileNumber = mobileNumber;
 	}
 
-	private String getLocation() {
+	public String getLocation() {
 		return location;
 	}
 
-	private String getAbout() {
+	public String getAbout() {
 		return about;
 	}
 	public void setUserID(int userID) {
@@ -67,11 +67,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "user id : " + userID + "\nname : " + name + "\nmobile : " + mobileNumber + "\n";
 	}
 
 	public String getSkills() {

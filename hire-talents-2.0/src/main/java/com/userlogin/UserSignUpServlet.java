@@ -7,9 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.model.User;
 import com.repository.DB;
 
 /**
@@ -34,30 +32,28 @@ public class UserSignUpServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String repassword = request.getParameter("repassword");
 		String mobileNumber = request.getParameter("contact");
 		String skills = request.getParameter("skills");
 		String qualification = request.getParameter("qualification");
 		int experience = Integer.parseInt(request.getParameter("experience"));
+		String location = request.getParameter("location");
+		String about = request.getParameter("about");
 
-		// Check if passwords match
-		if (!password.equals(repassword)) {
-			response.sendRedirect("UserSignUp.jsp?error=password");
-			return;
-		}
-		HttpSession session = request.getSession();
-		User user = DB.getInstance().createAndGetUser(name, email, qualification, password, mobileNumber, skills,
-				experience);
-		session.setAttribute("name", user.getName());
-		session.setAttribute("mobileNumber", user.getMobileNumber());
-		session.setAttribute("userID", user.getUserID());
-		session.setAttribute("email", user.getEmail());
-		session.setAttribute("experience", user.getExperience());
-		session.setAttribute("skills", user.getSkills());
-		session.setAttribute("qualification", user.getQualification());
-		session.setAttribute("skills", user.getSkills());
+//		HttpSession session = request.getSession();
+//		User user = 
+		DB.getInstance().createAndGetUser(name, email, qualification, password, mobileNumber, skills, experience,
+				location, about);
 
-		response.sendRedirect("UserLoginView.jsp?userID=" + user.getUserID());
+//		session.setAttribute("name", user.getName());
+//		session.setAttribute("mobileNumber", user.getMobileNumber());
+//		session.setAttribute("userID", user.getUserID());
+//		session.setAttribute("email", user.getEmail());
+//		session.setAttribute("experience", user.getExperience());
+//		session.setAttribute("skills", user.getSkills());
+//		session.setAttribute("qualification", user.getQualification());
+//		session.setAttribute("skills", user.getSkills());
+//		session.setAttribute("location", user.getLocation());
+		response.sendRedirect("UserLoginView.jsp");
 
 	}
 

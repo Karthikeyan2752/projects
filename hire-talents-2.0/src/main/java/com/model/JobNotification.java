@@ -11,13 +11,13 @@ public class JobNotification {
 	private int experience;
 	private String responsibilities;
 	private String location;
-	private int type;
+	private String type;
 	private String requirements;
 	private boolean isActive;
 
 	public JobNotification(int jobID, String jobTitle, String skills, HR hr,
 			int numberOfVacancies, String description, int experience, String responsibilities, String location,
-			int type, String requirements, boolean isActive) {
+			String type, String requirements, boolean isActive) {
 		super();
 		this.experience = experience;
 		this.responsibilities = responsibilities;
@@ -46,14 +46,7 @@ public class JobNotification {
 	}
 
 	public String getType() {
-		if (type == 1) {
-			return "WFH";
-		} else if (type == 2) {
-			return "WFO";
-		} else if (type == 3) {
-			return "Remote";
-		}
-		return "Not specified";
+		return type;
 	}
 
 	public String getRequirements() {

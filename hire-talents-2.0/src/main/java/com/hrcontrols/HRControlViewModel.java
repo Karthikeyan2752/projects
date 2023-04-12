@@ -11,10 +11,10 @@ import com.repository.DB;
 public class HRControlViewModel {
 
 
-	public int postJob(int HRID, String title, int numberOfVacancies, String endDate,
-			String skills, String description) {
-		return DB.getInstance().postJob(HRID, title, numberOfVacancies, endDate,
-				skills, description);
+	public int postJob(int HRID, String title, int numberOfVacancies, String skills, String description,
+			String requirements, String responsibilities, int experience, String type, String location) {
+		return DB.getInstance().postJob(HRID, title, numberOfVacancies, skills, description, requirements,
+				responsibilities, experience, type, location);
 
 	}
 

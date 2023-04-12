@@ -30,15 +30,25 @@ public class PostJob extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String description = request.getParameter("description");
-		String title = request.getParameter("jobTitle");
-		int numberOfVacancies = Integer.parseInt(request.getParameter("numberOfVacancies"));
-		String applicationEndDate = request.getParameter("applicationEndDate");
+		System.out.println(description);
+		String title = request.getParameter("designation");
+		String requirements = request.getParameter("requirements");
+		System.out.println(requirements);
+		String responsibilities = request.getParameter("responsibilities");
 		String skills = request.getParameter("skills");
+		String type = request.getParameter("type");
+		System.out.println(type);
+		int numberOfVacancies = Integer.parseInt(request.getParameter("a"));
+		String location = request.getParameter("location");
+		int experience = Integer.parseInt(request.getParameter("experience"));
 		int HRID = (Integer) (request.getSession().getAttribute("userID"));
-		int jobID = new HRControlViewModel().postJob(HRID, title, numberOfVacancies, applicationEndDate, skills,
-				description);
-		response.sendRedirect("PostJob.jsp");
-
+		int jobID = new HRControlViewModel().postJob(HRID, title, numberOfVacancies, skills, description, requirements,
+				responsibilities, experience, type, location);
+		if (jobID == 0) {
+			response.getWriter().write("Job posting failed. Please try again."); // Response message for failure
+		} else {
+			response.getWriter().write("Job posted successfully."); // Response message for success
+		}
 	}
 
 }

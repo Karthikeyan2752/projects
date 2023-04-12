@@ -24,7 +24,5 @@ public class ApplyJobServlet extends HttpServlet {
 		int userID = (Integer) request.getSession().getAttribute("userID");
 		DB.getInstance().apply(userID, jobID);
 
-		// Redirect the user back to the job listing page
-		response.sendRedirect("ShowJobs.jsp");
     }
 }

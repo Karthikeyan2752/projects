@@ -1,4 +1,4 @@
-package com.apply;
+package com.hrcontrols;
 
 import java.io.IOException;
 
@@ -7,20 +7,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.repository.DB;
 
 /**
- * Servlet implementation class SaveProfileServlet
+ * Servlet implementation class SaveInfoServlet
  */
-@WebServlet("/SaveProfileServlet")
-public class SaveProfileServlet extends HttpServlet {
+@WebServlet("/SaveInfoServlet")
+public class SaveInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SaveProfileServlet() {
+    public SaveInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,17 +31,22 @@ public class SaveProfileServlet extends HttpServlet {
 		int userID = (int) request.getSession().getAttribute("userID");
 		String name = request.getParameter("name");
 		String mobileNumber = request.getParameter("mobileNumber");
-		String skills = request.getParameter("skills");
-		String qualification = request.getParameter("qualification");
+		String website = request.getParameter("website");
+		String companyName = request.getParameter("companyName");
 		String email = request.getParameter("email");
 		String location = request.getParameter("location");
 		String about = request.getParameter("about");
-		int experience = Integer.parseInt(request.getParameter("experience"));
+		DB.getInstance().updateHR(userID, name, mobileNumber, website, companyName, email, location, about);
 
-		DB.getInstance().updateUser(userID, name, mobileNumber, skills, qualification, email, experience, location,
-				about);
-
-		response.sendRedirect("UserHomePage.jsp");
+		HttpSession session = request.getSession();
+		session.setAttribute("name", name);
+		session.setAttribute("mobileNumber", mobileNumber);
+		session.setAttribute("email", email);
+		session.setAttribute("companyName", companyName);
+		session.setAttribute("about", about);
+		session.setAttribute("location", location);
+		session.setAttribute("website", website);
+		response.sendRedirect("HRHome.jsp");
 	}
 
 }

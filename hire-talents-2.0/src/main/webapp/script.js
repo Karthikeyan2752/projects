@@ -4,7 +4,7 @@ function redirectToAppliedCandidates(jobID) {
 }
 function callLetters(){
 	var postContainer = document.getElementById('post-container');
-	postContainer.innerHTML =`<div class="post"><h2>Jobs based on `+designation+'</h2></div>';
+	postContainer.innerHTML =`<div class="post"><h2>Call Letters</h2></div>`;
 	var page = 1;
 	var isLoading = false;
 	var xhrInit = new XMLHttpRequest();
@@ -34,10 +34,10 @@ function callLetters(){
 			}
 		}
 	}
-	xhrInit.open('GET', 'FetchPostsWithNameServlet?page=' + page+'&title='+designation, true);
+	xhrInit.open('GET', 'CallLetters?page=' + page, true);
 	//xhrInit.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xhrInit.send();
-	// Attach the scroll listener to fetch more posts
+	
 	window.addEventListener('scroll', function() {
 		
 		if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100) {
@@ -49,7 +49,7 @@ function callLetters(){
 					if (xhr.readyState === XMLHttpRequest.DONE) {
 						if (xhr.status === 200) {
 							var response = JSON.parse(xhr.responseText);
-							var jobs = response.jobs;
+							var jobs = response.callLetters;
 							var html = '';
 							for (var i = 0; i < jobs.length; i++) {
 
@@ -76,7 +76,7 @@ function callLetters(){
 					}
 				}
 
-				xhrInit.open('GET', 'FetchPostsWithNameServlet?page=' + page+'&title='+designation, true);
+				xhrInit.open('GET', 'CallLetters?page=' + page, true);
 				//xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 				xhr.send();
 			}
@@ -164,6 +164,49 @@ function search(){
 		}
 	});
 }
+
+function editProfile() {
+    var main = document.getElementById("main");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            var html = `<br><div id = editProfile>
+            			<h1 style="text-align:center;">User Profile</h1><br><br>
+                        <form action="SaveProfileServlet" method="POST" onsubmit="return validateForm()">
+                            <label for="name"><strong>Name:</strong></label><br>
+                            <input type="text" id="name" name="name" value="${response.name}"><br><br>
+
+                            <label for="mobileNumber"><strong>Mobile Number:</strong></label><br>
+                            <input type="text" id="mobileNumber" name="mobileNumber" value="${response.mobileNumber}"><br><br>
+
+                            <label for="skills"><strong>Skills:</strong></label><br>
+                            <input type="text" id="skills" name="skills" value="${response.skills}"><br><br>
+
+                            <label for="qualification"><strong>Qualification:</strong></label><br>
+                            <input type="text" id="qualification" name="qualification" value="${response.qualification}"><br><br>
+
+                            <label for="email"><strong>Email:</strong></label><br>
+                            <input type="text" id="email" name="email" value="${response.email}"><br><br>
+
+                            <label for="experience"><strong>Experience:</strong></label><br>
+                            <input type="number" id="experience" name="experience" value="${response.experience}"><br><br>
+
+                            <label for="location"><strong>Location:</strong></label><br>
+                            <input type="text" id="location" name="location" value="${response.location}"><br><br>
+
+                            <label for="about"><strong>About:</strong></label><br>
+                            <textarea id="about" name="about">${response.about}</textarea><br><br>
+
+                            <button type="submit">Save</button>
+                        </form></div>`;
+            main.innerHTML = html;
+        }
+    };
+    xhr.open("GET", "GetUserProfileServlet", true);
+    xhr.send();
+}
+
 function feed() {
 	
 	var page = 1;
@@ -245,7 +288,46 @@ function feed() {
 	});
 }
 
+function validateForm() {
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  var contact = document.getElementById("contact").value;
+  var skills = document.getElementById("skills").value;
+  var qualification = document.getElementById("qualification").value;
+  
+  var contactRegex = /^[0-9]{10}$/;
+  if(!contactRegex.test(contact)){
+	  alert("Please enter a valid mobile number");
+	  return false;
+  }
+  
+  var skillRegex = /^[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*$/;
+  if(!skillRegex.test(skills)){
+	  alert("Please enter valid skills");
+	  return false;
+  }
+  
+  var qualificationRegex = /^([a-zA-Z]+\.)?[a-zA-Z\s]+$/;
+  if(!qualificationRegex.test(qualification)){
+	  alert("Please enter a valid qualification");
+	  return false;
+  }
+  
+  var nameRegex = /^[a-zA-Z ]+$/;
+  if (!nameRegex.test(name)) {
+    alert("Please enter a valid name");
+    return false;
+  }
 
+  
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email address");
+    return false;
+  }
+
+  return true;
+}
 
 function apply(button, jobId) {
 	console.log(jobId);

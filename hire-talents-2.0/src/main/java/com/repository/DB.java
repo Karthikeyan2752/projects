@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.model.Admin;
+import com.model.CallLetter;
 import com.model.HR;
 import com.model.JobNotification;
 import com.model.User;
@@ -62,7 +62,7 @@ public class DB {
 			String location = result.getString("location");
 			String requirements = result.getString("requirements");
 			boolean isActive = result.getBoolean("isActive");
-			int type = result.getInt("type");
+			String type = result.getString("type");
 
 			job = new JobNotification(jobID, title, skill, hr, noOfVacancies, description, experience, responsibilities,
 					location, type, requirements, isActive);
@@ -207,7 +207,7 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, title, skills, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
@@ -222,18 +222,34 @@ public class DB {
 	}
 
 	public String apply(int userId, int jobId) {
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		try {
 			boolean callLetter = false;
-			String query = "insert into appliedcandidates values(" + userId + "," + jobId + "," + callLetter + ")";
-			statement = connection.createStatement();
-			statement.executeUpdate(query);
-			return "job with ID : " + jobId + " applied successfully";
+			String s = "";
+			String query = "INSERT INTO appliedcandidates VALUES(?, ?, ?, ?, ?, ?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			preparedStatement.setInt(2, jobId);
+			preparedStatement.setBoolean(3, callLetter);
+			preparedStatement.setString(4, s);
+			preparedStatement.setString(5, s);
+			preparedStatement.setString(6, s);
+			preparedStatement.executeUpdate();
+			return "Job with ID: " + jobId + " applied successfully";
 		} catch (SQLException e) {
-			System.out.println("error");
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Error: " + e.getMessage());
+			}
 		}
-		return "something went wrong\n";
+		return "Something went wrong.\n";
 	}
+
 
 	public List<JobNotification> getJobsUserNotApplied(int userId) {
 		List<JobNotification> jobs = new ArrayList<>();
@@ -260,7 +276,7 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, title, skill, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
@@ -295,7 +311,7 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, title, skill, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
@@ -358,7 +374,7 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, title, skill, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
@@ -455,8 +471,8 @@ public class DB {
 
 	}
 
-	public int postJob(int HRID, String title, int numberOfVacancies, String skills, String description, int experience,
-			String responsibilities, String location, int type, String requirements, boolean isActive) {
+	public int postJob(int HRID, String title, int numberOfVacancies, String skills, String description,
+			String requirements, String responsibilities, int experience, String type, String location) {
 		PreparedStatement ps = null;
 		ResultSet result = null;
 		int jobId = 0;
@@ -478,9 +494,9 @@ public class DB {
 			ps.setInt(7, experience);
 			ps.setString(8, responsibilities);
 			ps.setString(9, location);
-			ps.setInt(10, type);
+			ps.setString(10, type);
 			ps.setString(11, requirements);
-			ps.setBoolean(12, isActive);
+			ps.setBoolean(12, true);
 			ps.executeUpdate();
 			return jobId;
 		} catch (SQLException e) {
@@ -539,10 +555,6 @@ public class DB {
 
 	}
 
-	public Admin checkValidUser(String userName, String password) {
-		return null;
-	}
-
 	public void updateUser(int userID, String name, String mobileNumber, String skills, String qualification,
 			String email, int experience, String location, String about) {
 		try {
@@ -555,12 +567,35 @@ public class DB {
 			statement.setString(5, email);
 			statement.setInt(6, experience);
 			statement.setString(7, location);
+			System.out.println(location);
 			statement.setString(8, about);
 			statement.setInt(9, userID);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String updateHR(int userID, String name, String mobileNumber, String website, String companyName,
+			String email,
+			String location, String about) {
+		try {
+			String sql = "UPDATE hrdetails SET name=?, mobile=?, website=?, companyName=?, email=?,location=?,about=? WHERE id=?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, name);
+			statement.setString(2, mobileNumber);
+			statement.setString(3, website);
+			statement.setString(4, companyName);
+			statement.setString(5, email);
+			statement.setString(6, location);
+			statement.setString(7, about);
+			statement.setInt(8, userID);
+			statement.executeUpdate();
+			return "updated successfully";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "updation failure";
 	}
 
 	public String removeCandidate(int userID, int jobID) {
@@ -577,8 +612,6 @@ public class DB {
 			return "Error while deleting record: " + e.getMessage();
 		}
 	}
-
-
 
 	public int getNoOfSelectedCandidates(int jobID) {
 		PreparedStatement statement = null;
@@ -733,7 +766,7 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, name, skills, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
@@ -774,7 +807,7 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, title, skills, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
@@ -788,14 +821,123 @@ public class DB {
 		return jobs;
 	}
 
-	public List<JobNotification> fetchCallLetters(int start, int userID) {
+	public List<CallLetter> fetchCallLetters(int start, int userID) {
+		List<CallLetter> callLetters = new ArrayList<>();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		try {
+			String query = "SELECT * FROM appliedcandidates WHERE uid=? and isCallLetterSent = ? ORDER BY uid LIMIT ?, ?";
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, userID);
+			statement.setBoolean(2, true);
+			statement.setInt(3, start);
+			statement.setInt(4, 10);
+			result = statement.executeQuery();
+
+			while (result.next()) {
+				int jobID = result.getInt("jid");
+				User user = getUser(userID);
+				JobNotification job = getJob(jobID);
+				String venue = result.getString("venue");
+				String date = result.getString("date");
+				String time = result.getString("time");
+				CallLetter callLetter = new CallLetter(user, job, date, venue, time);
+				callLetters.add(callLetter);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return callLetters;
+
+	}
+
+	public HR getHR(String email, String password) {
+		PreparedStatement preparedStatement = null;
+		ResultSet result = null;
+		HR hr = null;
+
+		try {
+			String query = "SELECT * FROM hrdetails WHERE email = ? AND password = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, password);
+			result = preparedStatement.executeQuery();
+			if (result.next()) {
+				String name = result.getString("name");
+				int id = result.getInt("id");
+				String companyName = result.getString("companyName");
+				String mobile = result.getString("mobile");
+				String location = result.getString("location");
+				String about = result.getString("about");
+				String websiteURL = result.getString("website");
+				hr = new HR(id, name, companyName, mobile, email, about, location, websiteURL);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (result != null) {
+					result.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Error: " + e.getMessage());
+			}
+		}
+		return hr;
+	}
+
+	public int getPostedJobsCount(int hRID) {
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String query = "select count(jid) from job where hrId=?";
+		int count = 0;
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, hRID);
+			result = statement.executeQuery();
+			if (result.next()) {
+				count = result.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	public int getSelectedCandidatesCount(int hRID) {
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String query = "SELECT COUNT(jid) FROM appliedcandidates WHERE isCallLetterSent = ? AND jid IN (SELECT jid FROM job WHERE hrId = ?)";
+		int count = 0;
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setBoolean(1, true);
+			statement.setInt(2, hRID);
+			result = statement.executeQuery();
+			if (result.next()) {
+				count = result.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+
+	}
+
+	public List<JobNotification> fetchPostedJobsFromDatabase(int start, int userID) {
 		List<JobNotification> jobs = new ArrayList<>();
 		JobNotification job = null;
 		PreparedStatement statement = null;
 		ResultSet result = null;
 
 		try {
-			String query = "SELECT * FROM appliedcandidates WHERE jid IN (SELECT jid FROM appliedcandidates WHERE uid = ?) ORDER BY jid LIMIT ?, ?";
+			String query = "SELECT * FROM job WHERE jid IN (SELECT jid FROM job WHERE hrId = ?) ORDER BY jid LIMIT ?, ?";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, userID);
 			statement.setInt(2, start);
@@ -815,19 +957,58 @@ public class DB {
 				String location = result.getString("location");
 				String requirements = result.getString("requirements");
 				boolean isActive = result.getBoolean("isActive");
-				int type = result.getInt("type");
+				String type = result.getString("type");
 
 				job = new JobNotification(jobID, title, skills, hr, noOfVacancies, description, experience,
 						responsibilities, location, type, requirements, isActive);
 				jobs.add(job);
 			}
-			System.out.println(jobs.size());
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 
 		return jobs;
+	}
 
+	public List<JobNotification> fetchFromPostedJobs(int start, int userID, String title) {
+		List<JobNotification> jobs = new ArrayList<>();
+		JobNotification job = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		try {
+			String query = "SELECT * FROM job WHERE title LIKE CONCAT('%', ?, '%') AND jid IN (SELECT jid FROM job WHERE hrId = ?) ORDER BY jid LIMIT ?, ?";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, title);
+			statement.setInt(2, userID);
+			statement.setInt(3, start);
+			statement.setInt(4, 10);
+			result = statement.executeQuery();
+
+			while (result.next()) {
+				int jobID = result.getInt("jid");
+				String name = result.getString("title");
+				int noOfVacancies = result.getInt("noOfVacancies");
+				int hrID = result.getInt("hrId");
+				HR hr = getHR(hrID);
+				String skills = result.getString("skill");
+				String description = result.getString("description");
+				int experience = result.getInt("experience");
+				String responsibilities = result.getString("responsibilities");
+				String location = result.getString("location");
+				String requirements = result.getString("requirements");
+				boolean isActive = result.getBoolean("isActive");
+				String type = result.getString("type");
+
+				job = new JobNotification(jobID, name, skills, hr, noOfVacancies, description, experience,
+						responsibilities, location, type, requirements, isActive);
+				jobs.add(job);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return jobs;
 	}
 
 }
