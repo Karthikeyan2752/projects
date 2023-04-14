@@ -20,6 +20,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet" href="jobs.css">
 <script src="HRFunctions.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 </head>
 <body id="body" onload="feed()">
 	<div id="header">
@@ -41,41 +42,44 @@
 						</div>
 					</li>
 					<li><button class="nav-button" onclick="feed()">Home</button></li>
-					<li><button class="nav-button" onclick="automate()">Automate Hiring</button></li>
-					<li><button class="nav-button" onclick="post()">Post Job</button></li>
+					<li><button class="nav-button" onclick="post()">Post
+							Job</button></li>
 					<li><button class="nav-button" onclick="insights()">Insights</button></li>
 				</ul>
 			</nav>
 		</header>
 		<br>
 	</div>
-
+	
 	<main id="main">
-		<div id = "home">
-		<div id="profile">
-			<div class="profile-details">
-				<i class="fa-sharp fa-regular fa-buildings"></i>
-				<h3><%=companyName%></h3>
-				<p><%=about%></p>
-				<br>
-				<p>
-					<strong>Posted Jobs:</strong>
-					<%=postedJobs%></p>
-				<p>
-					<strong>Hired candidates:</strong>
-					<%=hiredCandidates%></p>
-				<button class="btn btn-primary edit-profile-button"
-					onclick="editInfo()">Edit Info</button>
-				<button class="btn btn-primary edit-profile-button"
-					onclick="window.location.href='UserLogout.jsp'">Logout</button>
+		<div id="insight"></div>
+		<div id="home">
+			<div id="profile">
+				<div class="profile-details">
+					<i class="fa-sharp fa-regular fa-buildings"></i>
+					<h3><%=companyName%></h3>
+					<p><%=about%></p>
+					<br>
+					<p>
+						<strong>Posted Jobs:</strong>
+						<%=postedJobs%></p>
+					<p>
+						<strong>Hired candidates:</strong>
+						<%=hiredCandidates%></p>
+					<button class="btn btn-primary edit-profile-button"
+						onclick="editInfo()">Edit Info</button>
+					<button class="btn btn-primary edit-profile-button"
+						onclick="window.location.href='UserLogout.jsp'">Logout</button>
+				</div>
 			</div>
-		</div>
-		<div id="post-container"></div>
+			<div id="post-container"></div>
+			<div id="candidates-container"></div>
 		</div>
 		<div id="home2" style="display: 'none'"></div>
 	</main>
-	
-	<br><br>
+
+	<br>
+	<br>
 	<footer style="text-align: center;">
 		<p>&copy; 2023 Resilient Cyber Solutions. All rights reserved.</p>
 
@@ -90,6 +94,9 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<div id="toast"><div id="img"></div><div id="desc"></div></div>	
+	<div id="toast">
+		<div id="img"></div>
+		<div id="desc"></div>
+	</div>
 </body>
 </html>

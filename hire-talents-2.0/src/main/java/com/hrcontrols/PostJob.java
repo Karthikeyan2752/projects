@@ -45,9 +45,9 @@ public class PostJob extends HttpServlet {
 		int jobID = new HRControlViewModel().postJob(HRID, title, numberOfVacancies, skills, description, requirements,
 				responsibilities, experience, type, location);
 		if (jobID == 0) {
-			response.getWriter().write("Job posting failed. Please try again."); // Response message for failure
+			response.getWriter().print("Job posting failed. Please try again."); // Response message for failure
 		} else {
-			response.getWriter().write("Job posted successfully."); // Response message for success
+			response.getWriter().print("Job posted successfully."); // Response message for success
 		}
 	}
 

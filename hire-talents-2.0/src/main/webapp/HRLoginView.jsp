@@ -23,9 +23,9 @@
 		<h2>User Login</h2>
 		<form action="HRLoginS" method="post">
 			<label for="email">Email ID:</label>
-			<input type="text" id="email" name="email" ><br><br>
+			<input type="text" id="email" name="email" required><br><br>
 			<label for="password">Password:</label>
-			<input type="password" id="password" name="password"><br><br>
+			<input type="password" id="password" name="password" required><br><br>
 			<button type="submit">Sign In</button>
 			<button type="button" onclick="window.location.href='HRSignUp.jsp'">New User</button>
 		</form>

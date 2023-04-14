@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.repository.DB;
-
 /**
  * Servlet implementation class SaveInfoServlet
  */
@@ -33,19 +31,18 @@ public class SaveInfoServlet extends HttpServlet {
 		String mobileNumber = request.getParameter("mobileNumber");
 		String website = request.getParameter("website");
 		String companyName = request.getParameter("companyName");
-		String email = request.getParameter("email");
 		String location = request.getParameter("location");
 		String about = request.getParameter("about");
-		DB.getInstance().updateHR(userID, name, mobileNumber, website, companyName, email, location, about);
-
+		String result = new HRControlViewModel().updateHR(userID, name, mobileNumber, website, companyName, location,
+				about);
 		HttpSession session = request.getSession();
 		session.setAttribute("name", name);
 		session.setAttribute("mobileNumber", mobileNumber);
-		session.setAttribute("email", email);
 		session.setAttribute("companyName", companyName);
 		session.setAttribute("about", about);
 		session.setAttribute("location", location);
 		session.setAttribute("website", website);
+		response.getWriter().print(result);
 		response.sendRedirect("HRHome.jsp");
 	}
 

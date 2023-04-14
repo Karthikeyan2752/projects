@@ -51,26 +51,29 @@
 	</div>
 
 	<main id="main">
-
-		<div id="profile">
-			<div class="profile-details">
-				<i class="fas fa-user-circle profile-icon"></i>
-				<h3><%=name%></h3>
-				<p><%=about%></p>
-				<br>
-				<p>
-					<strong>Applied Jobs:</strong>
-					<%=appliedJobs%></p>
-				<p>
-					<strong>Selected Jobs:</strong>
-					<%=selectedJobs%></p>
-				<button class="btn btn-primary edit-profile-button"
-					onclick="editProfile()">Edit Profile</button>
-				<button class="btn btn-primary edit-profile-button"
-					onclick="window.location.href='UserLogout.jsp'">Logout</button>
+		<div id="home">
+			<div id="profile">
+				<div class="profile-details">
+					<i class="fas fa-user-circle profile-icon"></i>
+					<h3><%=name%></h3>
+					<p><%=about%></p>
+					<br>
+					<p>
+						<strong>Applied Jobs:</strong>
+						<%=appliedJobs%></p>
+					<p>
+						<strong>Selected Jobs:</strong>
+						<%=selectedJobs%></p>
+					<button class="btn btn-primary edit-profile-button"
+						onclick="editProfile()">Edit Profile</button>
+					<button class="btn btn-primary edit-profile-button"
+						onclick="window.location.href='UserLogout.jsp'">Logout</button>
+				</div>
 			</div>
+			<div id="post-container"></div>
+			<div id="call-letter"></div>
 		</div>
-		<div id="post-container"></div>
+		<div id="home2" style="display:'none';"></div>
 	</main>
 	
 	<br><br>

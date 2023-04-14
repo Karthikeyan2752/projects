@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.repository.DB;
-
 /**
  * Servlet implementation class SaveProfileServlet
  */
@@ -32,14 +30,14 @@ public class SaveProfileServlet extends HttpServlet {
 		String mobileNumber = request.getParameter("mobileNumber");
 		String skills = request.getParameter("skills");
 		String qualification = request.getParameter("qualification");
-		String email = request.getParameter("email");
 		String location = request.getParameter("location");
 		String about = request.getParameter("about");
 		int experience = Integer.parseInt(request.getParameter("experience"));
 
-		DB.getInstance().updateUser(userID, name, mobileNumber, skills, qualification, email, experience, location,
+		String result = new ApplyViewModel().updateUser(userID, name, mobileNumber, skills, qualification, experience,
+				location,
 				about);
-
+		response.getWriter().print(result);
 		response.sendRedirect("UserHomePage.jsp");
 	}
 

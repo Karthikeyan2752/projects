@@ -29,7 +29,6 @@ public class FeedbackServlet extends HttpServlet {
 		int userID = (Integer) request.getSession().getAttribute("userID");
 		String feedback = request.getParameter("feedback");
 		String result = new ApplyViewModel().feedback(userID, feedback);
-		System.out.println(result);
 		response.sendRedirect("UserHomePage.jsp");
 	}
 

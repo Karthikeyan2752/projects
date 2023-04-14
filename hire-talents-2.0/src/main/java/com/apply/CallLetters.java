@@ -16,7 +16,6 @@ import org.json.simple.JSONObject;
 import com.model.CallLetter;
 import com.model.HR;
 import com.model.JobNotification;
-import com.repository.DB;
 
 /**
  * Servlet implementation class CallLetters
@@ -42,7 +41,7 @@ public class CallLetters extends HttpServlet {
 		int page = Integer.parseInt(request.getParameter("page"));
 		int userID = (Integer) request.getSession().getAttribute("userID");
 		int start = (page - 1) * 10;
-		List<CallLetter> callLetters = DB.getInstance().fetchCallLetters(start, userID);
+		List<CallLetter> callLetters = new ApplyViewModel().getCallLetters(userID, start);
 		JSONObject jsonResponse = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 
@@ -55,10 +54,10 @@ public class CallLetters extends HttpServlet {
 			jsonJob.put("noOfVacancies", job.getNumberOfVacancies());
 			jsonJob.put("skill", job.getSkills());
 			jsonJob.put("experience", job.getExperience());
-			jsonJob.put("location", callLetter.getVenue());
+			jsonJob.put("venue", callLetter.getVenue());
 			jsonJob.put("time", callLetter.getTime());
 			jsonJob.put("date", callLetter.getDate());
-			jsonJob.put("requirement", job.getRequirements());
+			jsonJob.put("requirements", job.getRequirements());
 			jsonJob.put("responsibilities", job.getResponsibilities());
 			jsonJob.put("type", job.getType());
 			jsonJob.put("companyName", hr.getCompanyName());

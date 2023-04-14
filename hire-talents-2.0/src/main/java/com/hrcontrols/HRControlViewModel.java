@@ -3,7 +3,6 @@ package com.hrcontrols;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.model.HR;
 import com.model.JobNotification;
 import com.model.User;
 import com.repository.DB;
@@ -18,27 +17,30 @@ public class HRControlViewModel {
 
 	}
 
+	public String updateHR(int userID, String name, String mobileNumber, String website, String companyName,
+			String location, String about) {
+		return DB.getInstance().updateHR(userID, name, mobileNumber, website, companyName, location, about);
+	}
 
 	public List<User> getAppliedCandidates(int jobID) {
 		return DB.getInstance().getAppliedCandidates(jobID);
 	}
 
-
-	public JobNotification getJob(HR hr, int jobID) {
+	public JobNotification getJob(int jobID) {
 		return DB.getInstance().getJob(jobID);
 	}
 
 
-	public String sendCallLetter(HR hr, List<User> selectedCandidates, JobNotification job) {
-		for (User candidate : selectedCandidates) {
-			DB.getInstance().sendCallLetter(candidate.getUserID(), job.getID());
-		}
-		return "call Letter sent successfully";
+	public String sendCallLetter(int userID, int jobID, String venue, String date, String time) {
+		return DB.getInstance().sendCallLetter(userID, jobID, venue, date, time);
 	}
 
+	public int getTotalNoOfJobsPosted(int userID) {
+		return DB.getInstance().getPostedJobsCount(userID);
+	}
 
-	public List<JobNotification> generateReport(HR hr) {
-		return DB.getInstance().getJobs(hr.getId());
+	public int getTotalNoOfSelectedCandidates(int userID) {
+		return DB.getInstance().getSelectedCandidatesCount(userID);
 	}
 
 	public int getNoOfSelectedCandidates(int jobID) {
@@ -49,7 +51,11 @@ public class HRControlViewModel {
 		return DB.getInstance().getNoOfAppliedCandidates(jobID);
 	}
 
-	public List<User> automateRecruitment(int jobID) {
+	public String getCompanyName(int userID) {
+		return DB.getInstance().getHR(userID).getCompanyName();
+	}
+
+	public List<User> automateHiring(int jobID, String venue, String date, String time) {
 		List<User> candidates = DB.getInstance().getAppliedCandidates(jobID);
 		JobNotification job = DB.getInstance().getJob(jobID);
 		List<User> selectedCandidates = new ArrayList<>();
@@ -68,10 +74,18 @@ public class HRControlViewModel {
 		}
 
 		for (User candidate : selectedCandidates) {
-			DB.getInstance().sendCallLetter(candidate.getUserID(), job.getID());
+			DB.getInstance().sendCallLetter(candidate.getUserID(), job.getID(), venue, date, time);
 		}
 
 		return selectedCandidates;
+	}
+
+	public List<JobNotification> getJobsPostedByHR(int userID) {
+		return DB.getInstance().getJobsPostedByHR(userID);
+	}
+
+	public String deactivateJob(int jobID) {
+		return DB.getInstance().deactivateJob(jobID);
 	}
 
 }

@@ -317,3 +317,74 @@ nav a:hover {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 60px; opacity: 0;}
 }
+
+
+    /* Style for the "Recruitment Insights" heading */
+    #insight h2 {
+        color: #007bff; /* Blue color */
+    }
+
+    /* Style for the "Jobs Posted by Recruiter" heading */
+    #insight h4 {
+        color: #007bff; /* Blue color */
+    }
+
+    /* Style for the table */
+    #jobsTable {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: collapse;
+    }
+
+    /* Style for table header cells */
+    #jobsTable th {
+        background-color: #007bff; /* Blue color */
+        color: #fff; /* White color */
+        font-weight: bold;
+        padding: 10px;
+        text-align: left;
+    }
+
+    /* Style for table data cells */
+    #jobsTable td {
+        padding: 10px;
+        border: 1px solid #dee2e6; /* Light gray color */
+    }
+
+    /* Alternate row background colors (light and dark) */
+    #jobsTable tbody tr:nth-child(even) {
+        background-color: #f8f9fa; /* Light gray color */
+    }
+
+    #jobsTable tbody tr:nth-child(odd) {
+        background-color: #fff; /* White color */
+    }
+
+    /* Style for the "Download Insights" button */
+    #insight button {
+        margin-top: 10px;
+        background-color: #007bff; /* Blue color */
+        color: #fff; /* White color */
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    /* Style for the "Thank you" message */
+    #insight p {
+        margin-top: 10px;
+    }
+
+#insights .btn {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+#insights .btn:hover {
+  background-color: RoyalBlue;
+}

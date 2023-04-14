@@ -30,11 +30,10 @@ public class RemoveCandidate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int jobID = Integer.parseInt(request.getParameter("jobID"));
 		int userID = Integer.parseInt(request.getParameter("userID"));
-		// int jobID = (Integer) (request.getSession().getAttribute("jobID"));
 
 		String result = DB.getInstance().removeCandidate(userID, jobID);
-		System.out.println(result);
-		// response.sendRedirect("AppliedCandidates.jsp");
+		response.getWriter().print(result);
+
 	}
 
 }

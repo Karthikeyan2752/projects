@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class SendCallLetter
+ * Servlet implementation class DeactivateJob
  */
-@WebServlet("/SendCallLetter")
-public class SendCallLetter extends HttpServlet {
+@WebServlet("/DeactivateJob")
+public class DeactivateJob extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendCallLetter() {
+    public DeactivateJob() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,17 +26,10 @@ public class SendCallLetter extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userID = Integer.parseInt(request.getParameter("userID"));
+		// TODO Auto-generated method stub
 		int jobID = Integer.parseInt(request.getParameter("jobID"));
-		String venue = request.getParameter("venue");
-		String time = request.getParameter("time");
-		String date = request.getParameter("date");
-		String result = new HRControlViewModel().sendCallLetter(userID, jobID, venue, date, time);
+		String result = new HRControlViewModel().deactivateJob(jobID);
 		response.getWriter().print(result);
-
-		// Send the redirect response after setting the response headers
-		// response.sendRedirect("AppliedCandidates.jsp");
 	}
-
 
 }
