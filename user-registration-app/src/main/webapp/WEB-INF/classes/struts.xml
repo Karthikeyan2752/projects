@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="default" namespace="/" extends="struts-default">
+	
+		<!--  <interceptors>
+			<interceptor name="validation" class="com.opensymphony.xwork2.validator.ValidationInterceptor" />
+		</interceptors> -->
+		
+		<action name="register" class="com.registration.RegisterAction">
+			<!-- <interceptor-ref name="validation">
+        		<param name="excludeMethods">input,back,cancel,browse</param>
+    		</interceptor-ref>  -->
+			<result name="success">/RegistrationSuccess.jsp</result>
+			<result name="input">/RegistrationForm.jsp</result>
+			<result name="error">/ErrorPage.jsp</result>
+		</action>
+
+		<action name="viewUser" class="com.registration.ViewUserAction">
+			<result name="success">/UserDetails.jsp</result>
+			<result name="error">/ErrorPage.jsp</result>
+		</action>
+		
+	</package>
+</struts>
